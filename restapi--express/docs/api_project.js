@@ -1,0 +1,17 @@
+define({
+  "name": "RestAPI Starter",
+  "version": "1.0.0",
+  "description": "Blank restapi boilerpalte",
+  "title": "RestAPI Starter",
+  "url": "http://172.105.93.40:8081/",
+  "github": "https://github.com/nikolav/react-express--starter/tree/main/restapi--express",
+  "sampleUrl": false,
+  "defaultVersion": "0.0.0",
+  "apidoc": "0.3.0",
+  "generator": {
+    "name": "apidoc",
+    "time": "2022-10-25T15:12:24.594Z",
+    "url": "https://apidocjs.com",
+    "version": "0.28.1"
+  }
+});

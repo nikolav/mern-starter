@@ -1,0 +1,547 @@
+yarn run v1.22.15
+$ dotenv -e .env.test -- nyc --reporter=html --reporter=text mocha --timeout 20000 --exit --recursive src/tests
+
+
+info: server started on port 3344 (test)
+  Authentication API
+    POST /v1/auth/register
+mongoDB connected...
+Executing (default): SELECT 1+1 AS result
+Executing (default): SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'main'
+Executing (default): SELECT i.relname AS name, ix.indisprimary AS primary, ix.indisunique AS unique, ix.indkey AS indkey, array_agg(a.attnum) as column_indexes, array_agg(a.attname) AS column_names, pg_get_indexdef(ix.indexrelid) AS definition FROM pg_class t, pg_class i, pg_index ix, pg_attribute a WHERE t.oid = ix.indrelid AND i.oid = ix.indexrelid AND a.attrelid = t.oid AND t.relkind = 'r' and t.relname = 'main' GROUP BY i.relname, ix.indexrelid, ix.indisprimary, ix.indisunique, ix.indkey ORDER BY i.relname;
+Executing (default): SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'messages'
+Executing (default): SELECT i.relname AS name, ix.indisprimary AS primary, ix.indisunique AS unique, ix.indkey AS indkey, array_agg(a.attnum) as column_indexes, array_agg(a.attname) AS column_names, pg_get_indexdef(ix.indexrelid) AS definition FROM pg_class t, pg_class i, pg_index ix, pg_attribute a WHERE t.oid = ix.indrelid AND i.oid = ix.indexrelid AND a.attrelid = t.oid AND t.relkind = 'r' and t.relname = 'messages' GROUP BY i.relname, ix.indexrelid, ix.indisprimary, ix.indisunique, ix.indkey ORDER BY i.relname;
+[0mPOST /v1/auth/register [32m201[0m 72.271 ms - 760[0m
+      √ should register a new user when request is ok (91ms)
+Executing (default): SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'roles'
+Executing (default): SELECT i.relname AS name, ix.indisprimary AS primary, ix.indisunique AS unique, ix.indkey AS indkey, array_agg(a.attnum) as column_indexes, array_agg(a.attname) AS column_names, pg_get_indexdef(ix.indexrelid) AS definition FROM pg_class t, pg_class i, pg_index ix, pg_attribute a WHERE t.oid = ix.indrelid AND i.oid = ix.indexrelid AND a.attrelid = t.oid AND t.relkind = 'r' and t.relname = 'roles' GROUP BY i.relname, ix.indexrelid, ix.indisprimary, ix.indisunique, ix.indkey ORDER BY i.relname;
+Executing (default): SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'roles_users'
+Executing (default): SELECT i.relname AS name, ix.indisprimary AS primary, ix.indisunique AS unique, ix.indkey AS indkey, array_agg(a.attnum) as column_indexes, array_agg(a.attname) AS column_names, pg_get_indexdef(ix.indexrelid) AS definition FROM pg_class t, pg_class i, pg_index ix, pg_attribute a WHERE t.oid = ix.indrelid AND i.oid = ix.indexrelid AND a.attrelid = t.oid AND t.relkind = 'r' and t.relname = 'roles_users' GROUP BY i.relname, ix.indexrelid, ix.indisprimary, ix.indisunique, ix.indkey ORDER BY i.relname;
+Executing (default): SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'sessions'
+Executing (default): SELECT i.relname AS name, ix.indisprimary AS primary, ix.indisunique AS unique, ix.indkey AS indkey, array_agg(a.attnum) as column_indexes, array_agg(a.attname) AS column_names, pg_get_indexdef(ix.indexrelid) AS definition FROM pg_class t, pg_class i, pg_index ix, pg_attribute a WHERE t.oid = ix.indrelid AND i.oid = ix.indexrelid AND a.attrelid = t.oid AND t.relkind = 'r' and t.relname = 'sessions' GROUP BY i.relname, ix.indexrelid, ix.indisprimary, ix.indisunique, ix.indkey ORDER BY i.relname;
+[0mPOST /v1/auth/register [33m409[0m 42.300 ms - 128[0m
+      √ should report error when email already exists (47ms)
+[0mPOST /v1/auth/register [33m400[0m 3.366 ms - 160[0m
+      √ should report error when the email provided is not valid
+[0mPOST /v1/auth/register [33m400[0m 1.636 ms - 254[0m
+      √ should report error when email and password are not provided
+    POST /v1/auth/login
+[0mPOST /v1/auth/login [32m200[0m 40.819 ms - 767[0m
+      √ should return an accessToken and a refreshToken when email and password matches (47ms)
+[0mPOST /v1/auth/login [33m400[0m 1.462 ms - 254[0m
+      √ should report error when email and password are not provided
+[0mPOST /v1/auth/login [33m400[0m 1.178 ms - 160[0m
+      √ should report error when the email provided is not valid
+[0mPOST /v1/auth/login [33m401[0m 34.052 ms - 52[0m
+      √ should report error when email and password don't match
+    POST /v1/auth/refresh-token
+[0mPOST /v1/auth/refresh-token [32m200[0m 76.759 ms - 612[0m
+      √ should return a new accessToken when refreshToken and email match (118ms)
+[0mPOST /v1/auth/refresh-token [33m401[0m 69.725 ms - 56[0m
+      √ should report error when email and refreshToken don't match (109ms)
+[0mPOST /v1/auth/refresh-token [33m400[0m 1.414 ms - 262[0m
+      √ should report error when email and refreshToken are not provided
+[0mPOST /v1/auth/refresh-token [33m401[0m 100.903 ms - 47[0m
+      √ should report error when the refreshToken is expired (245ms)
+    POST /v1/auth/send-password-reset
+[0mPOST /v1/auth/send-password-reset [32m200[0m 71.988 ms - 9[0m
+      √ should send an email with password reset link when email matches a user (115ms)
+[0mPOST /v1/auth/send-password-reset [33m401[0m 32.737 ms - 57[0m
+      √ should report error when email doesn't match a user (71ms)
+[0mPOST /v1/auth/send-password-reset [33m400[0m 1.224 ms - 150[0m
+      √ should report error when email is not provided
+    POST /v1/auth/reset-password
+[0mPOST /v1/auth/reset-password [32m200[0m 109.671 ms - 18[0m
+      √ should update password and send confirmation email when email and reset token are valid (149ms)
+[0mPOST /v1/auth/reset-password [33m401[0m 31.241 ms - 57[0m
+      √ should report error when email and reset token doesn't match a user (70ms)
+[0mPOST /v1/auth/reset-password [33m400[0m 1.197 ms - 150[0m
+      √ should report error when email is not provided
+[0mPOST /v1/auth/reset-password [33m400[0m 1.317 ms - 160[0m
+      √ should report error when reset token is not provided
+[0mPOST /v1/auth/reset-password [33m400[0m 1.077 ms - 156[0m
+      √ should report error when password is not provided
+[0mPOST /v1/auth/reset-password [33m401[0m 36.666 ms - 47[0m
+      √ should report error when the resetToken is expired (80ms)
+
+  @FakePosts --online
+[0mPOST /v1/auth/login [32m200[0m 34.202 ms - 743[0m
+Executing (4ac77640-4a4e-49e1-817c-e72affdb553d): START TRANSACTION;
+Executing (4ac77640-4a4e-49e1-817c-e72affdb553d): SELECT "id", "user_id", "data", "createdAt", "updatedAt" FROM "sessions" AS "Session" WHERE "Session"."user_id" = '63513cb04d980f311c5a06e0' LIMIT 1;
+Executing (4ac77640-4a4e-49e1-817c-e72affdb553d): CREATE OR REPLACE FUNCTION pg_temp.testfunc(OUT response "sessions", OUT sequelize_caught_exception text) RETURNS RECORD AS $func_fc88d388ee5e4a2385164bb0a9ddf712$ BEGIN INSERT INTO "sessions" ("id","user_id","data","createdAt","updatedAt") VALUES ('01ec1cca-ba98-4b96-ad0e-8421c8d3b0ad','63513cb04d980f311c5a06e0','H4sIAAAAAAAACquuBQBDv6ajAgAAAA==','2022-10-20 12:18:57.146 +00:00','2022-10-20 12:18:57.146 +00:00') RETURNING * INTO response; EXCEPTION WHEN unique_violation THEN GET STACKED DIAGNOSTICS sequelize_caught_exception = PG_EXCEPTION_DETAIL; END $func_fc88d388ee5e4a2385164bb0a9ddf712$ LANGUAGE plpgsql; SELECT (testfunc.response)."id", (testfunc.response)."user_id", (testfunc.response)."data", (testfunc.response)."createdAt", (testfunc.response)."updatedAt", testfunc.sequelize_caught_exception FROM pg_temp.testfunc(); DROP FUNCTION IF EXISTS pg_temp.testfunc();
+Executing (4ac77640-4a4e-49e1-817c-e72affdb553d): COMMIT;
+[0mPOST /v1/graphql [32m200[0m 378.754 ms - -[0m
+    √ allows authenticated user to access fake posts testing data (421ms)
+[0mPOST /v1/auth/login [32m200[0m 37.984 ms - 743[0m
+Executing (dc22fea5-8e27-4258-be6c-8f265e6ee786): START TRANSACTION;
+Executing (dc22fea5-8e27-4258-be6c-8f265e6ee786): SELECT "id", "user_id", "data", "createdAt", "updatedAt" FROM "sessions" AS "Session" WHERE "Session"."user_id" = '63513cb14d980f311c5a06ed' LIMIT 1;
+Executing (dc22fea5-8e27-4258-be6c-8f265e6ee786): CREATE OR REPLACE FUNCTION pg_temp.testfunc(OUT response "sessions", OUT sequelize_caught_exception text) RETURNS RECORD AS $func_6605cea68d964b2daf0d02a685a65aaa$ BEGIN INSERT INTO "sessions" ("id","user_id","data","createdAt","updatedAt") VALUES ('e8baf435-238b-4dcc-8154-3dff3adb2f42','63513cb14d980f311c5a06ed','H4sIAAAAAAAACquuBQBDv6ajAgAAAA==','2022-10-20 12:18:57.828 +00:00','2022-10-20 12:18:57.828 +00:00') RETURNING * INTO response; EXCEPTION WHEN unique_violation THEN GET STACKED DIAGNOSTICS sequelize_caught_exception = PG_EXCEPTION_DETAIL; END $func_6605cea68d964b2daf0d02a685a65aaa$ LANGUAGE plpgsql; SELECT (testfunc.response)."id", (testfunc.response)."user_id", (testfunc.response)."data", (testfunc.response)."createdAt", (testfunc.response)."updatedAt", testfunc.sequelize_caught_exception FROM pg_temp.testfunc(); DROP FUNCTION IF EXISTS pg_temp.testfunc();
+Executing (dc22fea5-8e27-4258-be6c-8f265e6ee786): COMMIT;
+[0mPOST /v1/graphql [32m200[0m 333.634 ms - 136[0m
+    √ allows authenticated user to access fake user accounts testing data (378ms)
+[0mPOST /v1/graphql [33m401[0m 1.686 ms - 38[0m
+    √ doesnt allow unauthenticated request to testing data
+
+  @ApolloGraphql --server-inits
+[0mPOST /v1/auth/login [32m200[0m 42.865 ms - 767[0m
+Executing (6a97f423-02d3-459a-8424-d2ec76af1a13): START TRANSACTION;
+Executing (6a97f423-02d3-459a-8424-d2ec76af1a13): SELECT "id", "user_id", "data", "createdAt", "updatedAt" FROM "sessions" AS "Session" WHERE "Session"."user_id" = '63513cb24d980f311c5a0703' LIMIT 1;
+Executing (6a97f423-02d3-459a-8424-d2ec76af1a13): CREATE OR REPLACE FUNCTION pg_temp.testfunc(OUT response "sessions", OUT sequelize_caught_exception text) RETURNS RECORD AS $func_a296fcb93d2d49ea97a5eb45e33a1098$ BEGIN INSERT INTO "sessions" ("id","user_id","data","createdAt","updatedAt") VALUES ('e87f7b91-74b5-4415-aa9f-607b010fe9f8','63513cb24d980f311c5a0703','H4sIAAAAAAAACquuBQBDv6ajAgAAAA==','2022-10-20 12:18:58.652 +00:00','2022-10-20 12:18:58.652 +00:00') RETURNING * INTO response; EXCEPTION WHEN unique_violation THEN GET STACKED DIAGNOSTICS sequelize_caught_exception = PG_EXCEPTION_DETAIL; END $func_a296fcb93d2d49ea97a5eb45e33a1098$ LANGUAGE plpgsql; SELECT (testfunc.response)."id", (testfunc.response)."user_id", (testfunc.response)."data", (testfunc.response)."createdAt", (testfunc.response)."updatedAt", testfunc.sequelize_caught_exception FROM pg_temp.testfunc(); DROP FUNCTION IF EXISTS pg_temp.testfunc();
+Executing (6a97f423-02d3-459a-8424-d2ec76af1a13): COMMIT;
+[0mPOST /v1/graphql [32m200[0m 261.022 ms - 30[0m
+    √ apollo online (311ms)
+[0mPOST /v1/graphql [33m401[0m 1.333 ms - 38[0m
+    √ unauthorized request to graphql data fails
+
+  @Messages --online
+[0mPOST /v1/auth/login [32m200[0m 37.668 ms - 743[0m
+Executing (fd3e7108-c6bb-45a4-bf84-c4d8f46d4d6f): START TRANSACTION;
+Executing (fd3e7108-c6bb-45a4-bf84-c4d8f46d4d6f): SELECT "id", "user_id", "data", "createdAt", "updatedAt" FROM "sessions" AS "Session" WHERE "Session"."user_id" = '63513cb34d980f311c5a0719' LIMIT 1;
+Executing (fd3e7108-c6bb-45a4-bf84-c4d8f46d4d6f): CREATE OR REPLACE FUNCTION pg_temp.testfunc(OUT response "sessions", OUT sequelize_caught_exception text) RETURNS RECORD AS $func_892ec5bd19b74e078e32acbd198d32a6$ BEGIN INSERT INTO "sessions" ("id","user_id","data","createdAt","updatedAt") VALUES ('94416f48-d5b1-4653-a9c7-e51fbe3bcd56','63513cb34d980f311c5a0719','H4sIAAAAAAAACquuBQBDv6ajAgAAAA==','2022-10-20 12:18:59.385 +00:00','2022-10-20 12:18:59.385 +00:00') RETURNING * INTO response; EXCEPTION WHEN unique_violation THEN GET STACKED DIAGNOSTICS sequelize_caught_exception = PG_EXCEPTION_DETAIL; END $func_892ec5bd19b74e078e32acbd198d32a6$ LANGUAGE plpgsql; SELECT (testfunc.response)."id", (testfunc.response)."user_id", (testfunc.response)."data", (testfunc.response)."createdAt", (testfunc.response)."updatedAt", testfunc.sequelize_caught_exception FROM pg_temp.testfunc(); DROP FUNCTION IF EXISTS pg_temp.testfunc();
+Executing (fd3e7108-c6bb-45a4-bf84-c4d8f46d4d6f): COMMIT;
+Executing (default): SELECT "id", "content", "createdAt", "updatedAt" FROM "messages" AS "Message";
+[0mPOST /v1/graphql [32m200[0m 312.385 ms - 300[0m
+    √ allows authenticated user to read messages (357ms)
+[0mPOST /v1/auth/login [32m200[0m 34.514 ms - 743[0m
+Executing (1af43b58-3c84-429f-9fe5-71a7982cd97d): START TRANSACTION;
+Executing (1af43b58-3c84-429f-9fe5-71a7982cd97d): SELECT "id", "user_id", "data", "createdAt", "updatedAt" FROM "sessions" AS "Session" WHERE "Session"."user_id" = '63513cb34d980f311c5a0726' LIMIT 1;
+Executing (1af43b58-3c84-429f-9fe5-71a7982cd97d): CREATE OR REPLACE FUNCTION pg_temp.testfunc(OUT response "sessions", OUT sequelize_caught_exception text) RETURNS RECORD AS $func_59db625a6c3d4217ad8f3c6f0b7883f3$ BEGIN INSERT INTO "sessions" ("id","user_id","data","createdAt","updatedAt") VALUES ('7cf2d9b7-fbed-46dc-8369-30a46e4ccd3c','63513cb34d980f311c5a0726','H4sIAAAAAAAACquuBQBDv6ajAgAAAA==','2022-10-20 12:18:59.955 +00:00','2022-10-20 12:18:59.955 +00:00') RETURNING * INTO response; EXCEPTION WHEN unique_violation THEN GET STACKED DIAGNOSTICS sequelize_caught_exception = PG_EXCEPTION_DETAIL; END $func_59db625a6c3d4217ad8f3c6f0b7883f3$ LANGUAGE plpgsql; SELECT (testfunc.response)."id", (testfunc.response)."user_id", (testfunc.response)."data", (testfunc.response)."createdAt", (testfunc.response)."updatedAt", testfunc.sequelize_caught_exception FROM pg_temp.testfunc(); DROP FUNCTION IF EXISTS pg_temp.testfunc();
+Executing (1af43b58-3c84-429f-9fe5-71a7982cd97d): COMMIT;
+Executing (default): INSERT INTO "messages" ("id","content","createdAt","updatedAt") VALUES ($1,$2,$3,$4) RETURNING "id","content","createdAt","updatedAt";
+[0mPOST /v1/graphql [32m200[0m 326.314 ms - 93[0m
+    √ allows authenticated user to write to messages (367ms)
+[0mPOST /v1/auth/login [32m200[0m 34.730 ms - 743[0m
+Executing (dcfea88d-9112-4236-934c-e020720a4306): START TRANSACTION;
+Executing (dcfea88d-9112-4236-934c-e020720a4306): SELECT "id", "user_id", "data", "createdAt", "updatedAt" FROM "sessions" AS "Session" WHERE "Session"."user_id" = '63513cb44d980f311c5a0733' LIMIT 1;
+Executing (dcfea88d-9112-4236-934c-e020720a4306): CREATE OR REPLACE FUNCTION pg_temp.testfunc(OUT response "sessions", OUT sequelize_caught_exception text) RETURNS RECORD AS $func_7fcb43ff66fe4b90b7ba14bd123afc7d$ BEGIN INSERT INTO "sessions" ("id","user_id","data","createdAt","updatedAt") VALUES ('1ad35813-c065-4bb3-8ff3-26417a483969','63513cb44d980f311c5a0733','H4sIAAAAAAAACquuBQBDv6ajAgAAAA==','2022-10-20 12:19:00.527 +00:00','2022-10-20 12:19:00.527 +00:00') RETURNING * INTO response; EXCEPTION WHEN unique_violation THEN GET STACKED DIAGNOSTICS sequelize_caught_exception = PG_EXCEPTION_DETAIL; END $func_7fcb43ff66fe4b90b7ba14bd123afc7d$ LANGUAGE plpgsql; SELECT (testfunc.response)."id", (testfunc.response)."user_id", (testfunc.response)."data", (testfunc.response)."createdAt", (testfunc.response)."updatedAt", testfunc.sequelize_caught_exception FROM pg_temp.testfunc(); DROP FUNCTION IF EXISTS pg_temp.testfunc();
+Executing (dcfea88d-9112-4236-934c-e020720a4306): COMMIT;
+Executing (default): SELECT "id", "content", "createdAt", "updatedAt" FROM "messages" AS "Message" WHERE "Message"."id" = '4e3d85a3-2472-4f08-b432-e6046fa08d22';
+[0mPOST /v1/graphql [32m200[0m 314.918 ms - 46[0m
+    √ allows authenticated user to read one message by id (357ms)
+[0mPOST /v1/auth/login [32m200[0m 36.257 ms - 743[0m
+Executing (ecfe68c1-298d-4003-a805-b9ab793bed3b): START TRANSACTION;
+Executing (ecfe68c1-298d-4003-a805-b9ab793bed3b): SELECT "id", "user_id", "data", "createdAt", "updatedAt" FROM "sessions" AS "Session" WHERE "Session"."user_id" = '63513cb44d980f311c5a0740' LIMIT 1;
+Executing (ecfe68c1-298d-4003-a805-b9ab793bed3b): CREATE OR REPLACE FUNCTION pg_temp.testfunc(OUT response "sessions", OUT sequelize_caught_exception text) RETURNS RECORD AS $func_5bd33dbfd872422987f99d25d355706d$ BEGIN INSERT INTO "sessions" ("id","user_id","data","createdAt","updatedAt") VALUES ('f825cd21-282b-4197-8f97-67b2241692cf','63513cb44d980f311c5a0740','H4sIAAAAAAAACquuBQBDv6ajAgAAAA==','2022-10-20 12:19:01.107 +00:00','2022-10-20 12:19:01.107 +00:00') RETURNING * INTO response; EXCEPTION WHEN unique_violation THEN GET STACKED DIAGNOSTICS sequelize_caught_exception = PG_EXCEPTION_DETAIL; END $func_5bd33dbfd872422987f99d25d355706d$ LANGUAGE plpgsql; SELECT (testfunc.response)."id", (testfunc.response)."user_id", (testfunc.response)."data", (testfunc.response)."createdAt", (testfunc.response)."updatedAt", testfunc.sequelize_caught_exception FROM pg_temp.testfunc(); DROP FUNCTION IF EXISTS pg_temp.testfunc();
+Executing (ecfe68c1-298d-4003-a805-b9ab793bed3b): COMMIT;
+Executing (default): DELETE FROM "messages" WHERE "id" = '4e3d85a3-2472-4f08-b432-e6046fa08d22'
+[0mPOST /v1/graphql [32m200[0m 316.226 ms - 29[0m
+    √ allows authenticated user to delete from messages (360ms)
+[0mPOST /v1/graphql [33m401[0m 1.226 ms - 38[0m
+    √ doesnt allow unauthenticated request to messages resource
+
+  @RoleAuthGuard --test
+Executing (8157e5af-c89f-4eea-be81-d391a5a4e9fa): START TRANSACTION;
+Executing (8157e5af-c89f-4eea-be81-d391a5a4e9fa): SELECT "id", "name", "createdAt", "updatedAt" FROM "roles" AS "Role" WHERE "Role"."name" = 'role-test';
+Executing (8157e5af-c89f-4eea-be81-d391a5a4e9fa): COMMIT;
+Executing (cabe48b5-f846-495d-a733-cf65ec5eb77f): START TRANSACTION;
+Executing (cabe48b5-f846-495d-a733-cf65ec5eb77f): SELECT "id", "name", "createdAt", "updatedAt" FROM "roles" AS "Role" WHERE "Role"."name" = 'role2 test';
+Executing (cabe48b5-f846-495d-a733-cf65ec5eb77f): COMMIT;
+Executing (eb30c971-13f2-47fd-bcf5-1c0d0f12de19): START TRANSACTION;
+Executing (eb30c971-13f2-47fd-bcf5-1c0d0f12de19): SELECT "id", "userId", "roleId", "createdAt", "updatedAt" FROM "roles_users" AS "RoleUser" WHERE "RoleUser"."userId" = '63513cb54d980f311c5a0756' AND "RoleUser"."roleId" = 'e4357d2a-f403-479a-9d3f-e70832f2c2b9' LIMIT 1;
+Executing (eb30c971-13f2-47fd-bcf5-1c0d0f12de19): CREATE OR REPLACE FUNCTION pg_temp.testfunc(OUT response "roles_users", OUT sequelize_caught_exception text) RETURNS RECORD AS $func_a4458fe1c8a14158ad261a6342612603$ BEGIN INSERT INTO "roles_users" ("id","userId","roleId","createdAt","updatedAt") VALUES ('79e9cc5e-3f6f-429f-818c-2dbddea01c51','63513cb54d980f311c5a0756','e4357d2a-f403-479a-9d3f-e70832f2c2b9','2022-10-20 12:19:02.313 +00:00','2022-10-20 12:19:02.313 +00:00') RETURNING * INTO response; EXCEPTION WHEN unique_violation THEN GET STACKED DIAGNOSTICS sequelize_caught_exception = PG_EXCEPTION_DETAIL; END $func_a4458fe1c8a14158ad261a6342612603$ LANGUAGE plpgsql; SELECT (testfunc.response)."id", (testfunc.response)."userId", (testfunc.response)."roleId", (testfunc.response)."createdAt", (testfunc.response)."updatedAt", testfunc.sequelize_caught_exception FROM pg_temp.testfunc(); DROP FUNCTION IF EXISTS pg_temp.testfunc();
+Executing (eb30c971-13f2-47fd-bcf5-1c0d0f12de19): COMMIT;
+[0mPOST /v1/auth/login [32m200[0m 35.541 ms - 743[0m
+Executing (ec40970c-32c8-458d-a90b-3cab88042158): START TRANSACTION;
+Executing (ec40970c-32c8-458d-a90b-3cab88042158): SELECT "id", "user_id", "data", "createdAt", "updatedAt" FROM "sessions" AS "Session" WHERE "Session"."user_id" = '63513cb54d980f311c5a0756' LIMIT 1;
+Executing (ec40970c-32c8-458d-a90b-3cab88042158): CREATE OR REPLACE FUNCTION pg_temp.testfunc(OUT response "sessions", OUT sequelize_caught_exception text) RETURNS RECORD AS $func_bcfb4725a6d64688b4c6f7c28fc9bb45$ BEGIN INSERT INTO "sessions" ("id","user_id","data","createdAt","updatedAt") VALUES ('962c8637-a6cd-401b-b106-7379fc2696b5','63513cb54d980f311c5a0756','H4sIAAAAAAAACquuBQBDv6ajAgAAAA==','2022-10-20 12:19:02.611 +00:00','2022-10-20 12:19:02.611 +00:00') RETURNING * INTO response; EXCEPTION WHEN unique_violation THEN GET STACKED DIAGNOSTICS sequelize_caught_exception = PG_EXCEPTION_DETAIL; END $func_bcfb4725a6d64688b4c6f7c28fc9bb45$ LANGUAGE plpgsql; SELECT (testfunc.response)."id", (testfunc.response)."user_id", (testfunc.response)."data", (testfunc.response)."createdAt", (testfunc.response)."updatedAt", testfunc.sequelize_caught_exception FROM pg_temp.testfunc(); DROP FUNCTION IF EXISTS pg_temp.testfunc();
+Executing (ec40970c-32c8-458d-a90b-3cab88042158): COMMIT;
+Executing (default): SELECT "roleId" FROM "roles_users" AS "RoleUser" WHERE "RoleUser"."userId" = '63513cb54d980f311c5a0756';
+Executing (default): SELECT "id", "name", "createdAt", "updatedAt" FROM "roles" AS "Role" WHERE "Role"."id" IN ('e4357d2a-f403-479a-9d3f-e70832f2c2b9');
+[0mGET /v1/testing/test [32m200[0m 370.439 ms - 20[0m
+    √ allows authenticated user with enough required policies to access guarded route (414ms)
+Executing (651468c8-9d5c-418f-810d-1d3bf829a233): START TRANSACTION;
+Executing (651468c8-9d5c-418f-810d-1d3bf829a233): SELECT "id", "name", "createdAt", "updatedAt" FROM "roles" AS "Role" WHERE "Role"."name" = 'role-test';
+Executing (651468c8-9d5c-418f-810d-1d3bf829a233): COMMIT;
+Executing (62740854-e61f-490b-9a6d-3704e1b05a0f): START TRANSACTION;
+Executing (62740854-e61f-490b-9a6d-3704e1b05a0f): SELECT "id", "name", "createdAt", "updatedAt" FROM "roles" AS "Role" WHERE "Role"."name" = 'role2 test';
+Executing (62740854-e61f-490b-9a6d-3704e1b05a0f): COMMIT;
+Executing (37111036-36d9-420d-ae98-4b0cd6aaa036): START TRANSACTION;
+Executing (37111036-36d9-420d-ae98-4b0cd6aaa036): SELECT "id", "userId", "roleId", "createdAt", "updatedAt" FROM "roles_users" AS "RoleUser" WHERE "RoleUser"."userId" = '63513cb74d980f311c5a0766' AND "RoleUser"."roleId" = 'e4357d2a-f403-479a-9d3f-e70832f2c2b9' LIMIT 1;
+Executing (37111036-36d9-420d-ae98-4b0cd6aaa036): CREATE OR REPLACE FUNCTION pg_temp.testfunc(OUT response "roles_users", OUT sequelize_caught_exception text) RETURNS RECORD AS $func_faf32700e52348f8b5de3ba0f08dfd9d$ BEGIN INSERT INTO "roles_users" ("id","userId","roleId","createdAt","updatedAt") VALUES ('b91e8683-95eb-48d0-a053-aeade4a1e253','63513cb74d980f311c5a0766','e4357d2a-f403-479a-9d3f-e70832f2c2b9','2022-10-20 12:19:03.557 +00:00','2022-10-20 12:19:03.557 +00:00') RETURNING * INTO response; EXCEPTION WHEN unique_violation THEN GET STACKED DIAGNOSTICS sequelize_caught_exception = PG_EXCEPTION_DETAIL; END $func_faf32700e52348f8b5de3ba0f08dfd9d$ LANGUAGE plpgsql; SELECT (testfunc.response)."id", (testfunc.response)."userId", (testfunc.response)."roleId", (testfunc.response)."createdAt", (testfunc.response)."updatedAt", testfunc.sequelize_caught_exception FROM pg_temp.testfunc(); DROP FUNCTION IF EXISTS pg_temp.testfunc();
+Executing (37111036-36d9-420d-ae98-4b0cd6aaa036): COMMIT;
+[0mPOST /v1/auth/login [32m200[0m 34.656 ms - 741[0m
+Executing (f501e017-bf81-4da8-a58e-61b490d1e456): START TRANSACTION;
+Executing (f501e017-bf81-4da8-a58e-61b490d1e456): SELECT "id", "user_id", "data", "createdAt", "updatedAt" FROM "sessions" AS "Session" WHERE "Session"."user_id" = '63513cb74d980f311c5a0769' LIMIT 1;
+Executing (f501e017-bf81-4da8-a58e-61b490d1e456): CREATE OR REPLACE FUNCTION pg_temp.testfunc(OUT response "sessions", OUT sequelize_caught_exception text) RETURNS RECORD AS $func_e0e6ffb9eef44c369f93a30e2a6389ae$ BEGIN INSERT INTO "sessions" ("id","user_id","data","createdAt","updatedAt") VALUES ('a22f60de-65c8-4636-ac09-56d21d9a1a6b','63513cb74d980f311c5a0769','H4sIAAAAAAAACquuBQBDv6ajAgAAAA==','2022-10-20 12:19:03.857 +00:00','2022-10-20 12:19:03.857 +00:00') RETURNING * INTO response; EXCEPTION WHEN unique_violation THEN GET STACKED DIAGNOSTICS sequelize_caught_exception = PG_EXCEPTION_DETAIL; END $func_e0e6ffb9eef44c369f93a30e2a6389ae$ LANGUAGE plpgsql; SELECT (testfunc.response)."id", (testfunc.response)."user_id", (testfunc.response)."data", (testfunc.response)."createdAt", (testfunc.response)."updatedAt", testfunc.sequelize_caught_exception FROM pg_temp.testfunc(); DROP FUNCTION IF EXISTS pg_temp.testfunc();
+Executing (f501e017-bf81-4da8-a58e-61b490d1e456): COMMIT;
+Executing (default): SELECT "roleId" FROM "roles_users" AS "RoleUser" WHERE "RoleUser"."userId" = '63513cb74d980f311c5a0769';
+Executing (default): SELECT "id", "name", "createdAt", "updatedAt" FROM "roles" AS "Role" WHERE "Role"."id" IN (NULL);
+[0mGET /v1/testing/test [33m403[0m 370.409 ms - 38[0m
+    √ doesnt allow authenticated user without required policy to access guarded route (411ms)
+
+  @Session --online
+[0mPOST /v1/auth/login [32m200[0m 34.446 ms - 743[0m
+Executing (642d0bfc-c6b0-4904-b5b8-10cf5b15cdc4): START TRANSACTION;
+Executing (642d0bfc-c6b0-4904-b5b8-10cf5b15cdc4): SELECT "id", "user_id", "data", "createdAt", "updatedAt" FROM "sessions" AS "Session" WHERE "Session"."user_id" = '63513cb84d980f311c5a0776' LIMIT 1;
+Executing (642d0bfc-c6b0-4904-b5b8-10cf5b15cdc4): CREATE OR REPLACE FUNCTION pg_temp.testfunc(OUT response "sessions", OUT sequelize_caught_exception text) RETURNS RECORD AS $func_6610809d64644fa3b0907b4821568256$ BEGIN INSERT INTO "sessions" ("id","user_id","data","createdAt","updatedAt") VALUES ('0ce4c92e-2a5b-4993-842d-e6d89c1acd59','63513cb84d980f311c5a0776','H4sIAAAAAAAACquuBQBDv6ajAgAAAA==','2022-10-20 12:19:04.565 +00:00','2022-10-20 12:19:04.565 +00:00') RETURNING * INTO response; EXCEPTION WHEN unique_violation THEN GET STACKED DIAGNOSTICS sequelize_caught_exception = PG_EXCEPTION_DETAIL; END $func_6610809d64644fa3b0907b4821568256$ LANGUAGE plpgsql; SELECT (testfunc.response)."id", (testfunc.response)."user_id", (testfunc.response)."data", (testfunc.response)."createdAt", (testfunc.response)."updatedAt", testfunc.sequelize_caught_exception FROM pg_temp.testfunc(); DROP FUNCTION IF EXISTS pg_temp.testfunc();
+Executing (642d0bfc-c6b0-4904-b5b8-10cf5b15cdc4): COMMIT;
+[0mPOST /v1/session/63513cb84d980f311c5a0776 [32m200[0m 266.221 ms - 2[0m
+    √ allows authenticated user to read session (307ms)
+[0mPOST /v1/auth/login [32m200[0m 38.455 ms - 743[0m
+Executing (440b840c-02f5-4b6a-b85a-020d78ceb004): START TRANSACTION;
+Executing (440b840c-02f5-4b6a-b85a-020d78ceb004): SELECT "id", "user_id", "data", "createdAt", "updatedAt" FROM "sessions" AS "Session" WHERE "Session"."user_id" = '63513cb84d980f311c5a0786' LIMIT 1;
+Executing (440b840c-02f5-4b6a-b85a-020d78ceb004): CREATE OR REPLACE FUNCTION pg_temp.testfunc(OUT response "sessions", OUT sequelize_caught_exception text) RETURNS RECORD AS $func_b815a6988a044dc9b0c466478c56b1c0$ BEGIN INSERT INTO "sessions" ("id","user_id","data","createdAt","updatedAt") VALUES ('23c22fe0-376f-4590-9a39-64db9973a53e','63513cb84d980f311c5a0786','H4sIAAAAAAAACquuBQBDv6ajAgAAAA==','2022-10-20 12:19:05.159 +00:00','2022-10-20 12:19:05.159 +00:00') RETURNING * INTO response; EXCEPTION WHEN unique_violation THEN GET STACKED DIAGNOSTICS sequelize_caught_exception = PG_EXCEPTION_DETAIL; END $func_b815a6988a044dc9b0c466478c56b1c0$ LANGUAGE plpgsql; SELECT (testfunc.response)."id", (testfunc.response)."user_id", (testfunc.response)."data", (testfunc.response)."createdAt", (testfunc.response)."updatedAt", testfunc.sequelize_caught_exception FROM pg_temp.testfunc(); DROP FUNCTION IF EXISTS pg_temp.testfunc();
+Executing (440b840c-02f5-4b6a-b85a-020d78ceb004): COMMIT;
+Executing (default): UPDATE "sessions" SET "data"=$1,"updatedAt"=$2 WHERE "id" = $3
+[0mPOST /v1/session [32m200[0m 313.050 ms - 29[0m
+Executing (999797aa-bbea-4e49-846d-ae99bcad58e6): START TRANSACTION;
+Executing (999797aa-bbea-4e49-846d-ae99bcad58e6): SELECT "id", "user_id", "data", "createdAt", "updatedAt" FROM "sessions" AS "Session" WHERE "Session"."user_id" = '63513cb84d980f311c5a0786' LIMIT 1;
+Executing (999797aa-bbea-4e49-846d-ae99bcad58e6): COMMIT;
+[0mPOST /v1/session/63513cb84d980f311c5a0786 [32m200[0m 243.838 ms - 29[0m
+    √ allows authenticated user to write session (605ms)
+[0mPOST /v1/auth/login [32m200[0m 38.211 ms - 743[0m
+Executing (577bb8b9-dd12-4450-adbc-0dd626e404e5): START TRANSACTION;
+Executing (577bb8b9-dd12-4450-adbc-0dd626e404e5): SELECT "id", "user_id", "data", "createdAt", "updatedAt" FROM "sessions" AS "Session" WHERE "Session"."user_id" = '63513cb94d980f311c5a0797' LIMIT 1;
+Executing (577bb8b9-dd12-4450-adbc-0dd626e404e5): CREATE OR REPLACE FUNCTION pg_temp.testfunc(OUT response "sessions", OUT sequelize_caught_exception text) RETURNS RECORD AS $func_5028c51024614abf89c8f38efde1449e$ BEGIN INSERT INTO "sessions" ("id","user_id","data","createdAt","updatedAt") VALUES ('550bdb96-ac83-4655-b164-dd94c1af45db','63513cb94d980f311c5a0797','H4sIAAAAAAAACquuBQBDv6ajAgAAAA==','2022-10-20 12:19:06.036 +00:00','2022-10-20 12:19:06.036 +00:00') RETURNING * INTO response; EXCEPTION WHEN unique_violation THEN GET STACKED DIAGNOSTICS sequelize_caught_exception = PG_EXCEPTION_DETAIL; END $func_5028c51024614abf89c8f38efde1449e$ LANGUAGE plpgsql; SELECT (testfunc.response)."id", (testfunc.response)."user_id", (testfunc.response)."data", (testfunc.response)."createdAt", (testfunc.response)."updatedAt", testfunc.sequelize_caught_exception FROM pg_temp.testfunc(); DROP FUNCTION IF EXISTS pg_temp.testfunc();
+Executing (577bb8b9-dd12-4450-adbc-0dd626e404e5): COMMIT;
+Executing (default): DELETE FROM "sessions" WHERE "user_id" = '63513cb94d980f311c5a0797'
+[0mDELETE /v1/session/63513cb94d980f311c5a0797 [32m200[0m 309.753 ms - 17[0m
+    √ allows authenticated user to destroy session (354ms)
+[0mPOST /v1/auth/login [32m200[0m 33.870 ms - 741[0m
+[0mPOST /v1/session/63513cba4d980f311c5a07a7 [33m403[0m 35.413 ms - 34[0m
+    √ doesnt allow authenticated user to access other user's session (76ms)
+
+  @Variables --online
+Executing (2e693d6d-e006-42d7-b2d7-1ad2f9cec961): START TRANSACTION;
+Executing (2e693d6d-e006-42d7-b2d7-1ad2f9cec961): SELECT "id", "name", "value", "createdAt", "updatedAt" FROM "main" AS "Main" WHERE "Main"."name" = 'test';
+Executing (2e693d6d-e006-42d7-b2d7-1ad2f9cec961): COMMIT;
+Executing (default): DELETE FROM "main" WHERE "name" = 'test--destroyed'
+[0mPOST /v1/auth/login [32m200[0m 34.277 ms - 767[0m
+Executing (183dd6a4-72a8-4e7a-8307-2781bdc0790d): START TRANSACTION;
+Executing (183dd6a4-72a8-4e7a-8307-2781bdc0790d): SELECT "id", "user_id", "data", "createdAt", "updatedAt" FROM "sessions" AS "Session" WHERE "Session"."user_id" = '63513cba4d980f311c5a07b7' LIMIT 1;
+Executing (183dd6a4-72a8-4e7a-8307-2781bdc0790d): CREATE OR REPLACE FUNCTION pg_temp.testfunc(OUT response "sessions", OUT sequelize_caught_exception text) RETURNS RECORD AS $func_12bf1dde8e034dc5847c948bb9a1aaa1$ BEGIN INSERT INTO "sessions" ("id","user_id","data","createdAt","updatedAt") VALUES ('9a52979a-b563-4bb6-aa96-e667aca7583c','63513cba4d980f311c5a07b7','H4sIAAAAAAAACquuBQBDv6ajAgAAAA==','2022-10-20 12:19:07.183 +00:00','2022-10-20 12:19:07.183 +00:00') RETURNING * INTO response; EXCEPTION WHEN unique_violation THEN GET STACKED DIAGNOSTICS sequelize_caught_exception = PG_EXCEPTION_DETAIL; END $func_12bf1dde8e034dc5847c948bb9a1aaa1$ LANGUAGE plpgsql; SELECT (testfunc.response)."id", (testfunc.response)."user_id", (testfunc.response)."data", (testfunc.response)."createdAt", (testfunc.response)."updatedAt", testfunc.sequelize_caught_exception FROM pg_temp.testfunc(); DROP FUNCTION IF EXISTS pg_temp.testfunc();
+Executing (183dd6a4-72a8-4e7a-8307-2781bdc0790d): COMMIT;
+Executing (default): SELECT "id", "name", "value", "createdAt", "updatedAt" FROM "main" AS "Main";
+[0mGET /v1/variables [32m200[0m 319.333 ms - 786[0m
+    √ lists variables for authenticated request (360ms)
+[0mGET /v1/variables [33m401[0m 1.079 ms - 38[0m
+    √ sends 401 for unauthorized request
+[0mPOST /v1/auth/login [32m200[0m 35.007 ms - 767[0m
+Executing (536e9e7c-1c8a-4d8e-bfa7-ac790d2389c4): START TRANSACTION;
+Executing (536e9e7c-1c8a-4d8e-bfa7-ac790d2389c4): SELECT "id", "user_id", "data", "createdAt", "updatedAt" FROM "sessions" AS "Session" WHERE "Session"."user_id" = '63513cbb4d980f311c5a07cd' LIMIT 1;
+Executing (536e9e7c-1c8a-4d8e-bfa7-ac790d2389c4): CREATE OR REPLACE FUNCTION pg_temp.testfunc(OUT response "sessions", OUT sequelize_caught_exception text) RETURNS RECORD AS $func_a7d532dac8e64e76ba9c57f8ee464ad3$ BEGIN INSERT INTO "sessions" ("id","user_id","data","createdAt","updatedAt") VALUES ('07726d5e-17dd-4615-be5c-1874ea4d0676','63513cbb4d980f311c5a07cd','H4sIAAAAAAAACquuBQBDv6ajAgAAAA==','2022-10-20 12:19:08.001 +00:00','2022-10-20 12:19:08.001 +00:00') RETURNING * INTO response; EXCEPTION WHEN unique_violation THEN GET STACKED DIAGNOSTICS sequelize_caught_exception = PG_EXCEPTION_DETAIL; END $func_a7d532dac8e64e76ba9c57f8ee464ad3$ LANGUAGE plpgsql; SELECT (testfunc.response)."id", (testfunc.response)."user_id", (testfunc.response)."data", (testfunc.response)."createdAt", (testfunc.response)."updatedAt", testfunc.sequelize_caught_exception FROM pg_temp.testfunc(); DROP FUNCTION IF EXISTS pg_temp.testfunc();
+Executing (536e9e7c-1c8a-4d8e-bfa7-ac790d2389c4): COMMIT;
+Executing (default): SELECT "id", "name", "value", "createdAt", "updatedAt" FROM "main" AS "Main" WHERE "Main"."name" = 'test';
+[0mGET /v1/variables/test [32m200[0m 310.203 ms - 152[0m
+    √ fetches single variable for authenticated request (352ms)
+[0mPOST /v1/auth/login [32m200[0m 34.493 ms - 767[0m
+Executing (58b0da42-d5f6-45cb-a0e2-dd325c907a30): START TRANSACTION;
+Executing (58b0da42-d5f6-45cb-a0e2-dd325c907a30): SELECT "id", "user_id", "data", "createdAt", "updatedAt" FROM "sessions" AS "Session" WHERE "Session"."user_id" = '63513cbc4d980f311c5a07da' LIMIT 1;
+Executing (58b0da42-d5f6-45cb-a0e2-dd325c907a30): CREATE OR REPLACE FUNCTION pg_temp.testfunc(OUT response "sessions", OUT sequelize_caught_exception text) RETURNS RECORD AS $func_3ced139aeef244d3bb0b39a776ea82d6$ BEGIN INSERT INTO "sessions" ("id","user_id","data","createdAt","updatedAt") VALUES ('2cace0db-2491-4a5a-a4a3-4abeb8468b6c','63513cbc4d980f311c5a07da','H4sIAAAAAAAACquuBQBDv6ajAgAAAA==','2022-10-20 12:19:08.575 +00:00','2022-10-20 12:19:08.575 +00:00') RETURNING * INTO response; EXCEPTION WHEN unique_violation THEN GET STACKED DIAGNOSTICS sequelize_caught_exception = PG_EXCEPTION_DETAIL; END $func_3ced139aeef244d3bb0b39a776ea82d6$ LANGUAGE plpgsql; SELECT (testfunc.response)."id", (testfunc.response)."user_id", (testfunc.response)."data", (testfunc.response)."createdAt", (testfunc.response)."updatedAt", testfunc.sequelize_caught_exception FROM pg_temp.testfunc(); DROP FUNCTION IF EXISTS pg_temp.testfunc();
+Executing (58b0da42-d5f6-45cb-a0e2-dd325c907a30): COMMIT;
+Executing (default): SELECT "id", "name", "value", "createdAt", "updatedAt" FROM "main" AS "Main" WHERE "Main"."name" = 'test--destroyed';
+[0mGET /v1/variables/test--destroyed [32m200[0m 314.931 ms - 4[0m
+    √ returns `null` for undefined variable name (356ms)
+[0mGET /v1/variables/test [33m401[0m 1.187 ms - 38[0m
+    √ sends 401 for unauthorized request for single variable
+[0mPOST /v1/auth/login [32m200[0m 35.585 ms - 767[0m
+Executing (90539a5d-9d7f-40a6-9d89-3841025538df): START TRANSACTION;
+Executing (90539a5d-9d7f-40a6-9d89-3841025538df): SELECT "id", "user_id", "data", "createdAt", "updatedAt" FROM "sessions" AS "Session" WHERE "Session"."user_id" = '63513cbd4d980f311c5a07f0' LIMIT 1;
+Executing (90539a5d-9d7f-40a6-9d89-3841025538df): CREATE OR REPLACE FUNCTION pg_temp.testfunc(OUT response "sessions", OUT sequelize_caught_exception text) RETURNS RECORD AS $func_ce64e9859ab74e2f9f6f5cfd1a9ed91b$ BEGIN INSERT INTO "sessions" ("id","user_id","data","createdAt","updatedAt") VALUES ('b97df518-8136-4571-a956-fea5bfba9c09','63513cbd4d980f311c5a07f0','H4sIAAAAAAAACquuBQBDv6ajAgAAAA==','2022-10-20 12:19:09.383 +00:00','2022-10-20 12:19:09.383 +00:00') RETURNING * INTO response; EXCEPTION WHEN unique_violation THEN GET STACKED DIAGNOSTICS sequelize_caught_exception = PG_EXCEPTION_DETAIL; END $func_ce64e9859ab74e2f9f6f5cfd1a9ed91b$ LANGUAGE plpgsql; SELECT (testfunc.response)."id", (testfunc.response)."user_id", (testfunc.response)."data", (testfunc.response)."createdAt", (testfunc.response)."updatedAt", testfunc.sequelize_caught_exception FROM pg_temp.testfunc(); DROP FUNCTION IF EXISTS pg_temp.testfunc();
+Executing (90539a5d-9d7f-40a6-9d89-3841025538df): COMMIT;
+Executing (default): SELECT "id", "name", "value", "createdAt", "updatedAt" FROM "main" AS "Main" WHERE "Main"."name" = 'test-2';
+Executing (default): UPDATE "main" SET "value"=$1,"updatedAt"=$2 WHERE "id" = $3
+Executing (default): SELECT "id", "name", "value", "createdAt", "updatedAt" FROM "main" AS "Main" WHERE "Main"."id" = '1c5205ed-2dc0-4e8e-85de-81757d95b2e6';
+[0mPOST /v1/variables [32m201[0m 436.939 ms - 156[0m
+    √ sets variable name/value pair (482ms)
+[0mPOST /v1/auth/login [32m200[0m 39.240 ms - 767[0m
+Executing (ffab6bf0-eba5-4a3f-940b-ac68e5189a7b): START TRANSACTION;
+Executing (ffab6bf0-eba5-4a3f-940b-ac68e5189a7b): SELECT "id", "user_id", "data", "createdAt", "updatedAt" FROM "sessions" AS "Session" WHERE "Session"."user_id" = '63513cbd4d980f311c5a07fd' LIMIT 1;
+Executing (ffab6bf0-eba5-4a3f-940b-ac68e5189a7b): CREATE OR REPLACE FUNCTION pg_temp.testfunc(OUT response "sessions", OUT sequelize_caught_exception text) RETURNS RECORD AS $func_e20d4fd2cfa344ff980ef02fd8b7cb31$ BEGIN INSERT INTO "sessions" ("id","user_id","data","createdAt","updatedAt") VALUES ('f9dc9351-44d2-4e10-a307-fd1b7c9a888b','63513cbd4d980f311c5a07fd','H4sIAAAAAAAACquuBQBDv6ajAgAAAA==','2022-10-20 12:19:10.084 +00:00','2022-10-20 12:19:10.084 +00:00') RETURNING * INTO response; EXCEPTION WHEN unique_violation THEN GET STACKED DIAGNOSTICS sequelize_caught_exception = PG_EXCEPTION_DETAIL; END $func_e20d4fd2cfa344ff980ef02fd8b7cb31$ LANGUAGE plpgsql; SELECT (testfunc.response)."id", (testfunc.response)."user_id", (testfunc.response)."data", (testfunc.response)."createdAt", (testfunc.response)."updatedAt", testfunc.sequelize_caught_exception FROM pg_temp.testfunc(); DROP FUNCTION IF EXISTS pg_temp.testfunc();
+Executing (ffab6bf0-eba5-4a3f-940b-ac68e5189a7b): COMMIT;
+[0mPOST /v1/variables [33m400[0m 257.592 ms - 69[0m
+    √ sends 400 for missing variable .name (303ms)
+[0mPOST /v1/auth/login [32m200[0m 35.553 ms - 767[0m
+Executing (0f882022-9994-4f73-b8f3-409b4d5f63fa): START TRANSACTION;
+Executing (0f882022-9994-4f73-b8f3-409b4d5f63fa): SELECT "id", "user_id", "data", "createdAt", "updatedAt" FROM "sessions" AS "Session" WHERE "Session"."user_id" = '63513cbe4d980f311c5a080a' LIMIT 1;
+Executing (0f882022-9994-4f73-b8f3-409b4d5f63fa): CREATE OR REPLACE FUNCTION pg_temp.testfunc(OUT response "sessions", OUT sequelize_caught_exception text) RETURNS RECORD AS $func_c9eec0cc68224a94803d3aeac4555dab$ BEGIN INSERT INTO "sessions" ("id","user_id","data","createdAt","updatedAt") VALUES ('82830d3f-bb73-4176-8bc6-39609fa6bb29','63513cbe4d980f311c5a080a','H4sIAAAAAAAACquuBQBDv6ajAgAAAA==','2022-10-20 12:19:10.601 +00:00','2022-10-20 12:19:10.601 +00:00') RETURNING * INTO response; EXCEPTION WHEN unique_violation THEN GET STACKED DIAGNOSTICS sequelize_caught_exception = PG_EXCEPTION_DETAIL; END $func_c9eec0cc68224a94803d3aeac4555dab$ LANGUAGE plpgsql; SELECT (testfunc.response)."id", (testfunc.response)."user_id", (testfunc.response)."data", (testfunc.response)."createdAt", (testfunc.response)."updatedAt", testfunc.sequelize_caught_exception FROM pg_temp.testfunc(); DROP FUNCTION IF EXISTS pg_temp.testfunc();
+Executing (0f882022-9994-4f73-b8f3-409b4d5f63fa): COMMIT;
+[0mPOST /v1/variables [33m400[0m 273.255 ms - 70[0m
+    √ sends 400 for missing variable .value (316ms)
+[0mPOST /v1/auth/login [32m200[0m 34.655 ms - 767[0m
+Executing (e3753a99-a4cf-4c46-83ac-15b337539816): START TRANSACTION;
+Executing (e3753a99-a4cf-4c46-83ac-15b337539816): SELECT "id", "user_id", "data", "createdAt", "updatedAt" FROM "sessions" AS "Session" WHERE "Session"."user_id" = '63513cbe4d980f311c5a0817' LIMIT 1;
+Executing (e3753a99-a4cf-4c46-83ac-15b337539816): CREATE OR REPLACE FUNCTION pg_temp.testfunc(OUT response "sessions", OUT sequelize_caught_exception text) RETURNS RECORD AS $func_f1554d25b4e649879ce3f1bec06be957$ BEGIN INSERT INTO "sessions" ("id","user_id","data","createdAt","updatedAt") VALUES ('7c674df9-37aa-4a6b-881c-a91e07935c90','63513cbe4d980f311c5a0817','H4sIAAAAAAAACquuBQBDv6ajAgAAAA==','2022-10-20 12:19:11.136 +00:00','2022-10-20 12:19:11.136 +00:00') RETURNING * INTO response; EXCEPTION WHEN unique_violation THEN GET STACKED DIAGNOSTICS sequelize_caught_exception = PG_EXCEPTION_DETAIL; END $func_f1554d25b4e649879ce3f1bec06be957$ LANGUAGE plpgsql; SELECT (testfunc.response)."id", (testfunc.response)."user_id", (testfunc.response)."data", (testfunc.response)."createdAt", (testfunc.response)."updatedAt", testfunc.sequelize_caught_exception FROM pg_temp.testfunc(); DROP FUNCTION IF EXISTS pg_temp.testfunc();
+Executing (e3753a99-a4cf-4c46-83ac-15b337539816): COMMIT;
+[0mPOST /v1/variables [33m400[0m 267.842 ms - 127[0m
+    √ sends 400 for missing input (308ms)
+[0mPOST /v1/variables [33m401[0m 1.082 ms - 38[0m
+    √ sends 401 for unauthorized set variable request
+Executing (default): INSERT INTO "main" ("id","name","value","createdAt","updatedAt") VALUES ($1,$2,$3,$4,$5) RETURNING "id","name","value","createdAt","updatedAt";
+[0mPOST /v1/auth/login [32m200[0m 35.005 ms - 767[0m
+Executing (fcd624fc-2d6a-4c72-80b6-b23e8a7fdaaf): START TRANSACTION;
+Executing (fcd624fc-2d6a-4c72-80b6-b23e8a7fdaaf): SELECT "id", "user_id", "data", "createdAt", "updatedAt" FROM "sessions" AS "Session" WHERE "Session"."user_id" = '63513cbf4d980f311c5a082d' LIMIT 1;
+Executing (fcd624fc-2d6a-4c72-80b6-b23e8a7fdaaf): CREATE OR REPLACE FUNCTION pg_temp.testfunc(OUT response "sessions", OUT sequelize_caught_exception text) RETURNS RECORD AS $func_9dd026533f2b4e868d70dc432a658851$ BEGIN INSERT INTO "sessions" ("id","user_id","data","createdAt","updatedAt") VALUES ('dadd1a0c-785d-437f-8779-89d41853c7fa','63513cbf4d980f311c5a082d','H4sIAAAAAAAACquuBQBDv6ajAgAAAA==','2022-10-20 12:19:12.017 +00:00','2022-10-20 12:19:12.017 +00:00') RETURNING * INTO response; EXCEPTION WHEN unique_violation THEN GET STACKED DIAGNOSTICS sequelize_caught_exception = PG_EXCEPTION_DETAIL; END $func_9dd026533f2b4e868d70dc432a658851$ LANGUAGE plpgsql; SELECT (testfunc.response)."id", (testfunc.response)."user_id", (testfunc.response)."data", (testfunc.response)."createdAt", (testfunc.response)."updatedAt", testfunc.sequelize_caught_exception FROM pg_temp.testfunc(); DROP FUNCTION IF EXISTS pg_temp.testfunc();
+Executing (fcd624fc-2d6a-4c72-80b6-b23e8a7fdaaf): COMMIT;
+Executing (default): DELETE FROM "main" WHERE "id" = '2c9908ef-b9e8-45d6-b017-b3431c28e224'
+[0mDELETE /v1/variables [32m200[0m 312.224 ms - 17[0m
+    √ deletes variable by pk/id (416ms)
+[0mDELETE /v1/variables [33m401[0m 1.049 ms - 38[0m
+    √ sends 401 for unauthorized delete variable request
+
+  unit-tests --functions
+    @hasOwn(node, field);
+      √ checks existance of objects own enumerable fields
+      √ gives `false` for null or undefined values
+    @groupByCount(collection);
+      √ groups collection of primitives in gropus by count
+    @testId();
+      √ generates random strings for testing purpose
+
+  POST /v1/users
+Executing (4c112145-a56f-4dd2-bc81-c4430819a418): START TRANSACTION;
+Executing (4c112145-a56f-4dd2-bc81-c4430819a418): SELECT "id", "user_id", "data", "createdAt", "updatedAt" FROM "sessions" AS "Session" WHERE "Session"."user_id" = '63513cc14d980f311c5a0855' LIMIT 1;
+Executing (4c112145-a56f-4dd2-bc81-c4430819a418): CREATE OR REPLACE FUNCTION pg_temp.testfunc(OUT response "sessions", OUT sequelize_caught_exception text) RETURNS RECORD AS $func_feece773d1ca4ef1aa40439781f2d378$ BEGIN INSERT INTO "sessions" ("id","user_id","data","createdAt","updatedAt") VALUES ('6905c92c-d2f5-4dfb-8daa-9c571925f38b','63513cc14d980f311c5a0855','H4sIAAAAAAAACquuBQBDv6ajAgAAAA==','2022-10-20 12:19:13.277 +00:00','2022-10-20 12:19:13.277 +00:00') RETURNING * INTO response; EXCEPTION WHEN unique_violation THEN GET STACKED DIAGNOSTICS sequelize_caught_exception = PG_EXCEPTION_DETAIL; END $func_feece773d1ca4ef1aa40439781f2d378$ LANGUAGE plpgsql; SELECT (testfunc.response)."id", (testfunc.response)."user_id", (testfunc.response)."data", (testfunc.response)."createdAt", (testfunc.response)."updatedAt", testfunc.sequelize_caught_exception FROM pg_temp.testfunc(); DROP FUNCTION IF EXISTS pg_temp.testfunc();
+Executing (4c112145-a56f-4dd2-bc81-c4430819a418): COMMIT;
+[0mPOST /v1/users [32m201[0m 438.258 ms - 133[0m
+    √ should create a new user when request is ok (443ms)
+Executing (5c7fa2a2-5f2e-4863-b06c-2a72bddf03e3): START TRANSACTION;
+Executing (5c7fa2a2-5f2e-4863-b06c-2a72bddf03e3): SELECT "id", "user_id", "data", "createdAt", "updatedAt" FROM "sessions" AS "Session" WHERE "Session"."user_id" = '63513cc14d980f311c5a085e' LIMIT 1;
+Executing (5c7fa2a2-5f2e-4863-b06c-2a72bddf03e3): CREATE OR REPLACE FUNCTION pg_temp.testfunc(OUT response "sessions", OUT sequelize_caught_exception text) RETURNS RECORD AS $func_4be2aa4640124921af8a6decf0fbe34c$ BEGIN INSERT INTO "sessions" ("id","user_id","data","createdAt","updatedAt") VALUES ('20fb0cdf-2613-43cc-a3f9-a3a1f38344eb','63513cc14d980f311c5a085e','H4sIAAAAAAAACquuBQBDv6ajAgAAAA==','2022-10-20 12:19:13.879 +00:00','2022-10-20 12:19:13.879 +00:00') RETURNING * INTO response; EXCEPTION WHEN unique_violation THEN GET STACKED DIAGNOSTICS sequelize_caught_exception = PG_EXCEPTION_DETAIL; END $func_4be2aa4640124921af8a6decf0fbe34c$ LANGUAGE plpgsql; SELECT (testfunc.response)."id", (testfunc.response)."user_id", (testfunc.response)."data", (testfunc.response)."createdAt", (testfunc.response)."updatedAt", testfunc.sequelize_caught_exception FROM pg_temp.testfunc(); DROP FUNCTION IF EXISTS pg_temp.testfunc();
+Executing (5c7fa2a2-5f2e-4863-b06c-2a72bddf03e3): COMMIT;
+[0mPOST /v1/users [32m201[0m 300.305 ms - 130[0m
+    √ should create a new user and set default role to "user" (304ms)
+Executing (2bdb0e54-d132-4406-8fad-4419f2437cc0): START TRANSACTION;
+Executing (2bdb0e54-d132-4406-8fad-4419f2437cc0): SELECT "id", "user_id", "data", "createdAt", "updatedAt" FROM "sessions" AS "Session" WHERE "Session"."user_id" = '63513cc24d980f311c5a0867' LIMIT 1;
+Executing (2bdb0e54-d132-4406-8fad-4419f2437cc0): CREATE OR REPLACE FUNCTION pg_temp.testfunc(OUT response "sessions", OUT sequelize_caught_exception text) RETURNS RECORD AS $func_0d062eca57ab4ebebf092256e0adb1a6$ BEGIN INSERT INTO "sessions" ("id","user_id","data","createdAt","updatedAt") VALUES ('d6ffa766-12a0-42e5-a1a9-c2f3ad6b184b','63513cc24d980f311c5a0867','H4sIAAAAAAAACquuBQBDv6ajAgAAAA==','2022-10-20 12:19:14.347 +00:00','2022-10-20 12:19:14.347 +00:00') RETURNING * INTO response; EXCEPTION WHEN unique_violation THEN GET STACKED DIAGNOSTICS sequelize_caught_exception = PG_EXCEPTION_DETAIL; END $func_0d062eca57ab4ebebf092256e0adb1a6$ LANGUAGE plpgsql; SELECT (testfunc.response)."id", (testfunc.response)."user_id", (testfunc.response)."data", (testfunc.response)."createdAt", (testfunc.response)."updatedAt", testfunc.sequelize_caught_exception FROM pg_temp.testfunc(); DROP FUNCTION IF EXISTS pg_temp.testfunc();
+Executing (2bdb0e54-d132-4406-8fad-4419f2437cc0): COMMIT;
+[0mPOST /v1/users [33m409[0m 291.082 ms - 128[0m
+    √ should report error when email already exists (302ms)
+Executing (14e0cfa8-8937-4878-b1f9-0429bbc1acec): START TRANSACTION;
+Executing (14e0cfa8-8937-4878-b1f9-0429bbc1acec): SELECT "id", "user_id", "data", "createdAt", "updatedAt" FROM "sessions" AS "Session" WHERE "Session"."user_id" = '63513cc24d980f311c5a0870' LIMIT 1;
+Executing (14e0cfa8-8937-4878-b1f9-0429bbc1acec): CREATE OR REPLACE FUNCTION pg_temp.testfunc(OUT response "sessions", OUT sequelize_caught_exception text) RETURNS RECORD AS $func_ef3848ab5d354617a10be5770cf8f92d$ BEGIN INSERT INTO "sessions" ("id","user_id","data","createdAt","updatedAt") VALUES ('99122636-3455-461d-84f3-e4d63e7fdfae','63513cc24d980f311c5a0870','H4sIAAAAAAAACquuBQBDv6ajAgAAAA==','2022-10-20 12:19:14.778 +00:00','2022-10-20 12:19:14.778 +00:00') RETURNING * INTO response; EXCEPTION WHEN unique_violation THEN GET STACKED DIAGNOSTICS sequelize_caught_exception = PG_EXCEPTION_DETAIL; END $func_ef3848ab5d354617a10be5770cf8f92d$ LANGUAGE plpgsql; SELECT (testfunc.response)."id", (testfunc.response)."user_id", (testfunc.response)."data", (testfunc.response)."createdAt", (testfunc.response)."updatedAt", testfunc.sequelize_caught_exception FROM pg_temp.testfunc(); DROP FUNCTION IF EXISTS pg_temp.testfunc();
+Executing (14e0cfa8-8937-4878-b1f9-0429bbc1acec): COMMIT;
+[0mPOST /v1/users [33m400[0m 254.316 ms - 150[0m
+    √ should report error when email is not provided (257ms)
+Executing (4f2376db-71ca-4a85-862a-0246f4a691a1): START TRANSACTION;
+Executing (4f2376db-71ca-4a85-862a-0246f4a691a1): SELECT "id", "user_id", "data", "createdAt", "updatedAt" FROM "sessions" AS "Session" WHERE "Session"."user_id" = '63513cc24d980f311c5a0877' LIMIT 1;
+Executing (4f2376db-71ca-4a85-862a-0246f4a691a1): CREATE OR REPLACE FUNCTION pg_temp.testfunc(OUT response "sessions", OUT sequelize_caught_exception text) RETURNS RECORD AS $func_cdefae86544343699af40b2436d6dbc5$ BEGIN INSERT INTO "sessions" ("id","user_id","data","createdAt","updatedAt") VALUES ('eb8d8739-e28e-46ee-baef-82064b5e215e','63513cc24d980f311c5a0877','H4sIAAAAAAAACquuBQBDv6ajAgAAAA==','2022-10-20 12:19:15.183 +00:00','2022-10-20 12:19:15.183 +00:00') RETURNING * INTO response; EXCEPTION WHEN unique_violation THEN GET STACKED DIAGNOSTICS sequelize_caught_exception = PG_EXCEPTION_DETAIL; END $func_cdefae86544343699af40b2436d6dbc5$ LANGUAGE plpgsql; SELECT (testfunc.response)."id", (testfunc.response)."user_id", (testfunc.response)."data", (testfunc.response)."createdAt", (testfunc.response)."updatedAt", testfunc.sequelize_caught_exception FROM pg_temp.testfunc(); DROP FUNCTION IF EXISTS pg_temp.testfunc();
+Executing (4f2376db-71ca-4a85-862a-0246f4a691a1): COMMIT;
+[0mPOST /v1/users [33m400[0m 255.459 ms - 184[0m
+    √ should report error when password length is less than 6 (259ms)
+[0mPOST /v1/users [33m403[0m 33.050 ms - 34[0m
+    √ should report error when logged user is not an admin
+
+  GET /v1/users
+Executing (0eb58c59-de7b-4553-abb7-06a83dc15749): START TRANSACTION;
+Executing (0eb58c59-de7b-4553-abb7-06a83dc15749): SELECT "id", "user_id", "data", "createdAt", "updatedAt" FROM "sessions" AS "Session" WHERE "Session"."user_id" = '63513cc34d980f311c5a0885' LIMIT 1;
+Executing (0eb58c59-de7b-4553-abb7-06a83dc15749): CREATE OR REPLACE FUNCTION pg_temp.testfunc(OUT response "sessions", OUT sequelize_caught_exception text) RETURNS RECORD AS $func_5d32d8ae6a994f1e82516b03ca2ae787$ BEGIN INSERT INTO "sessions" ("id","user_id","data","createdAt","updatedAt") VALUES ('9ca14d50-39c6-4f79-a569-58b3b69f6dea','63513cc34d980f311c5a0885','H4sIAAAAAAAACquuBQBDv6ajAgAAAA==','2022-10-20 12:19:15.867 +00:00','2022-10-20 12:19:15.867 +00:00') RETURNING * INTO response; EXCEPTION WHEN unique_violation THEN GET STACKED DIAGNOSTICS sequelize_caught_exception = PG_EXCEPTION_DETAIL; END $func_5d32d8ae6a994f1e82516b03ca2ae787$ LANGUAGE plpgsql; SELECT (testfunc.response)."id", (testfunc.response)."user_id", (testfunc.response)."data", (testfunc.response)."createdAt", (testfunc.response)."updatedAt", testfunc.sequelize_caught_exception FROM pg_temp.testfunc(); DROP FUNCTION IF EXISTS pg_temp.testfunc();
+Executing (0eb58c59-de7b-4553-abb7-06a83dc15749): COMMIT;
+[0mGET /v1/users [32m200[0m 296.918 ms - 272[0m
+    √ should get all users (363ms)
+Executing (700d4bcc-bf2d-4a4f-a639-7f88125584bb): START TRANSACTION;
+Executing (700d4bcc-bf2d-4a4f-a639-7f88125584bb): SELECT "id", "user_id", "data", "createdAt", "updatedAt" FROM "sessions" AS "Session" WHERE "Session"."user_id" = '63513cc44d980f311c5a088f' LIMIT 1;
+Executing (700d4bcc-bf2d-4a4f-a639-7f88125584bb): CREATE OR REPLACE FUNCTION pg_temp.testfunc(OUT response "sessions", OUT sequelize_caught_exception text) RETURNS RECORD AS $func_edf150ac4bc844129f073bd384dc9cbf$ BEGIN INSERT INTO "sessions" ("id","user_id","data","createdAt","updatedAt") VALUES ('3adffa20-a952-4de9-ba15-396d538dd7e9','63513cc44d980f311c5a088f','H4sIAAAAAAAACquuBQBDv6ajAgAAAA==','2022-10-20 12:19:16.363 +00:00','2022-10-20 12:19:16.363 +00:00') RETURNING * INTO response; EXCEPTION WHEN unique_violation THEN GET STACKED DIAGNOSTICS sequelize_caught_exception = PG_EXCEPTION_DETAIL; END $func_edf150ac4bc844129f073bd384dc9cbf$ LANGUAGE plpgsql; SELECT (testfunc.response)."id", (testfunc.response)."user_id", (testfunc.response)."data", (testfunc.response)."createdAt", (testfunc.response)."updatedAt", testfunc.sequelize_caught_exception FROM pg_temp.testfunc(); DROP FUNCTION IF EXISTS pg_temp.testfunc();
+Executing (700d4bcc-bf2d-4a4f-a639-7f88125584bb): COMMIT;
+[0mGET /v1/users?page=2&perPage=1 [32m200[0m 287.389 ms - 134[0m
+    √ should get all users with pagination (293ms)
+Executing (802e29de-9bfa-43a4-9997-25f2fcbf9521): START TRANSACTION;
+Executing (802e29de-9bfa-43a4-9997-25f2fcbf9521): SELECT "id", "user_id", "data", "createdAt", "updatedAt" FROM "sessions" AS "Session" WHERE "Session"."user_id" = '63513cc44d980f311c5a0897' LIMIT 1;
+Executing (802e29de-9bfa-43a4-9997-25f2fcbf9521): CREATE OR REPLACE FUNCTION pg_temp.testfunc(OUT response "sessions", OUT sequelize_caught_exception text) RETURNS RECORD AS $func_7566257af1b0484fb12356001c81783a$ BEGIN INSERT INTO "sessions" ("id","user_id","data","createdAt","updatedAt") VALUES ('7e352eb6-759f-4dd6-90ec-4e2fe67ec692','63513cc44d980f311c5a0897','H4sIAAAAAAAACquuBQBDv6ajAgAAAA==','2022-10-20 12:19:16.796 +00:00','2022-10-20 12:19:16.796 +00:00') RETURNING * INTO response; EXCEPTION WHEN unique_violation THEN GET STACKED DIAGNOSTICS sequelize_caught_exception = PG_EXCEPTION_DETAIL; END $func_7566257af1b0484fb12356001c81783a$ LANGUAGE plpgsql; SELECT (testfunc.response)."id", (testfunc.response)."user_id", (testfunc.response)."data", (testfunc.response)."createdAt", (testfunc.response)."updatedAt", testfunc.sequelize_caught_exception FROM pg_temp.testfunc(); DROP FUNCTION IF EXISTS pg_temp.testfunc();
+Executing (802e29de-9bfa-43a4-9997-25f2fcbf9521): COMMIT;
+[0mGET /v1/users?email=jonsnow%40gmail.com [32m200[0m 288.451 ms - 134[0m
+    √ should filter users (324ms)
+Executing (ef2cf724-6e71-4512-beaf-685f769e4329): START TRANSACTION;
+Executing (ef2cf724-6e71-4512-beaf-685f769e4329): SELECT "id", "user_id", "data", "createdAt", "updatedAt" FROM "sessions" AS "Session" WHERE "Session"."user_id" = '63513cc54d980f311c5a08a0' LIMIT 1;
+Executing (ef2cf724-6e71-4512-beaf-685f769e4329): CREATE OR REPLACE FUNCTION pg_temp.testfunc(OUT response "sessions", OUT sequelize_caught_exception text) RETURNS RECORD AS $func_40fdff09603e41939b71cf675fee0e67$ BEGIN INSERT INTO "sessions" ("id","user_id","data","createdAt","updatedAt") VALUES ('7fa13b46-2ffa-4825-9a07-284048cf5c50','63513cc54d980f311c5a08a0','H4sIAAAAAAAACquuBQBDv6ajAgAAAA==','2022-10-20 12:19:17.266 +00:00','2022-10-20 12:19:17.266 +00:00') RETURNING * INTO response; EXCEPTION WHEN unique_violation THEN GET STACKED DIAGNOSTICS sequelize_caught_exception = PG_EXCEPTION_DETAIL; END $func_40fdff09603e41939b71cf675fee0e67$ LANGUAGE plpgsql; SELECT (testfunc.response)."id", (testfunc.response)."user_id", (testfunc.response)."data", (testfunc.response)."createdAt", (testfunc.response)."updatedAt", testfunc.sequelize_caught_exception FROM pg_temp.testfunc(); DROP FUNCTION IF EXISTS pg_temp.testfunc();
+Executing (ef2cf724-6e71-4512-beaf-685f769e4329): COMMIT;
+[0mGET /v1/users?page=%3F&perPage=whaat [33m400[0m 254.428 ms - 260[0m
+    √ should report error when pagination's parameters are not a number (259ms)
+[0mGET /v1/users [33m403[0m 32.748 ms - 34[0m
+    √ should report error if logged user is not an admin
+
+  GET /v1/users/:userId
+Executing (933bb986-3e01-4226-9ed8-72ad8d28870e): START TRANSACTION;
+Executing (933bb986-3e01-4226-9ed8-72ad8d28870e): SELECT "id", "user_id", "data", "createdAt", "updatedAt" FROM "sessions" AS "Session" WHERE "Session"."user_id" = '63513cc54d980f311c5a08ae' LIMIT 1;
+Executing (933bb986-3e01-4226-9ed8-72ad8d28870e): CREATE OR REPLACE FUNCTION pg_temp.testfunc(OUT response "sessions", OUT sequelize_caught_exception text) RETURNS RECORD AS $func_d9d2ce205af740faa5ff0ad3bf1f1219$ BEGIN INSERT INTO "sessions" ("id","user_id","data","createdAt","updatedAt") VALUES ('a15cc39f-40af-4d88-9d57-c17277cfe999','63513cc54d980f311c5a08ae','H4sIAAAAAAAACquuBQBDv6ajAgAAAA==','2022-10-20 12:19:17.955 +00:00','2022-10-20 12:19:17.955 +00:00') RETURNING * INTO response; EXCEPTION WHEN unique_violation THEN GET STACKED DIAGNOSTICS sequelize_caught_exception = PG_EXCEPTION_DETAIL; END $func_d9d2ce205af740faa5ff0ad3bf1f1219$ LANGUAGE plpgsql; SELECT (testfunc.response)."id", (testfunc.response)."user_id", (testfunc.response)."data", (testfunc.response)."createdAt", (testfunc.response)."updatedAt", testfunc.sequelize_caught_exception FROM pg_temp.testfunc(); DROP FUNCTION IF EXISTS pg_temp.testfunc();
+Executing (933bb986-3e01-4226-9ed8-72ad8d28870e): COMMIT;
+[0mGET /v1/users/63513cc54d980f311c5a08ae [32m200[0m 289.392 ms - 137[0m
+    √ should get user (330ms)
+[0mGET /v1/users/56c787ccc67fc16ccc1a5e92 [33m404[0m 32.568 ms - 44[0m
+    √ should report error "User does not exist" when user does not exists
+[0mGET /v1/users/palmeiras1914 [33m404[0m 0.857 ms - 44[0m
+    √ should report error "User does not exist" when id is not a valid ObjectID
+[0mGET /v1/users/63513cc64d980f311c5a08c4 [33m403[0m 64.283 ms - 34[0m
+    √ should report error when logged user is not the same as the requested one (99ms)
+
+  PUT /v1/users/:userId
+Executing (492ebe06-240d-4bce-a9af-c27863119193): START TRANSACTION;
+Executing (492ebe06-240d-4bce-a9af-c27863119193): SELECT "id", "user_id", "data", "createdAt", "updatedAt" FROM "sessions" AS "Session" WHERE "Session"."user_id" = '63513cc64d980f311c5a08cd' LIMIT 1;
+Executing (492ebe06-240d-4bce-a9af-c27863119193): CREATE OR REPLACE FUNCTION pg_temp.testfunc(OUT response "sessions", OUT sequelize_caught_exception text) RETURNS RECORD AS $func_06db61fd0a3d45de95516fd095237f01$ BEGIN INSERT INTO "sessions" ("id","user_id","data","createdAt","updatedAt") VALUES ('89752c1c-496e-4c98-8a8c-cb570ea2e2a1','63513cc64d980f311c5a08cd','H4sIAAAAAAAACquuBQBDv6ajAgAAAA==','2022-10-20 12:19:18.987 +00:00','2022-10-20 12:19:18.987 +00:00') RETURNING * INTO response; EXCEPTION WHEN unique_violation THEN GET STACKED DIAGNOSTICS sequelize_caught_exception = PG_EXCEPTION_DETAIL; END $func_06db61fd0a3d45de95516fd095237f01$ LANGUAGE plpgsql; SELECT (testfunc.response)."id", (testfunc.response)."user_id", (testfunc.response)."data", (testfunc.response)."createdAt", (testfunc.response)."updatedAt", testfunc.sequelize_caught_exception FROM pg_temp.testfunc(); DROP FUNCTION IF EXISTS pg_temp.testfunc();
+Executing (492ebe06-240d-4bce-a9af-c27863119193): COMMIT;
+[0mPUT /v1/users/63513cc64d980f311c5a08cd [32m200[0m 370.428 ms - 130[0m
+    √ should replace user (404ms)
+Executing (7928460e-70e6-49b8-8319-ac695c80b5e7): START TRANSACTION;
+Executing (7928460e-70e6-49b8-8319-ac695c80b5e7): SELECT "id", "user_id", "data", "createdAt", "updatedAt" FROM "sessions" AS "Session" WHERE "Session"."user_id" = '63513cc74d980f311c5a08d9' LIMIT 1;
+Executing (7928460e-70e6-49b8-8319-ac695c80b5e7): CREATE OR REPLACE FUNCTION pg_temp.testfunc(OUT response "sessions", OUT sequelize_caught_exception text) RETURNS RECORD AS $func_aaeb12232f44437dbf0b12af2df81064$ BEGIN INSERT INTO "sessions" ("id","user_id","data","createdAt","updatedAt") VALUES ('f3071487-2af0-4441-bb86-e746d9d99600','63513cc74d980f311c5a08d9','H4sIAAAAAAAACquuBQBDv6ajAgAAAA==','2022-10-20 12:19:19.583 +00:00','2022-10-20 12:19:19.583 +00:00') RETURNING * INTO response; EXCEPTION WHEN unique_violation THEN GET STACKED DIAGNOSTICS sequelize_caught_exception = PG_EXCEPTION_DETAIL; END $func_aaeb12232f44437dbf0b12af2df81064$ LANGUAGE plpgsql; SELECT (testfunc.response)."id", (testfunc.response)."user_id", (testfunc.response)."data", (testfunc.response)."createdAt", (testfunc.response)."updatedAt", testfunc.sequelize_caught_exception FROM pg_temp.testfunc(); DROP FUNCTION IF EXISTS pg_temp.testfunc();
+Executing (7928460e-70e6-49b8-8319-ac695c80b5e7): COMMIT;
+[0mPUT /v1/users/63513cc74d980f311c5a08d9 [33m400[0m 346.023 ms - 150[0m
+    √ should report error when email is not provided (381ms)
+Executing (6323fd50-f94f-48a0-89c1-ee224595cfcf): START TRANSACTION;
+Executing (6323fd50-f94f-48a0-89c1-ee224595cfcf): SELECT "id", "user_id", "data", "createdAt", "updatedAt" FROM "sessions" AS "Session" WHERE "Session"."user_id" = '63513cc74d980f311c5a08e2' LIMIT 1;
+Executing (6323fd50-f94f-48a0-89c1-ee224595cfcf): CREATE OR REPLACE FUNCTION pg_temp.testfunc(OUT response "sessions", OUT sequelize_caught_exception text) RETURNS RECORD AS $func_67a7cd1f38d44ce4a20895f359575a51$ BEGIN INSERT INTO "sessions" ("id","user_id","data","createdAt","updatedAt") VALUES ('6e9386ff-1844-4569-b3d2-9b6e4153e528','63513cc74d980f311c5a08e2','H4sIAAAAAAAACquuBQBDv6ajAgAAAA==','2022-10-20 12:19:20.058 +00:00','2022-10-20 12:19:20.058 +00:00') RETURNING * INTO response; EXCEPTION WHEN unique_violation THEN GET STACKED DIAGNOSTICS sequelize_caught_exception = PG_EXCEPTION_DETAIL; END $func_67a7cd1f38d44ce4a20895f359575a51$ LANGUAGE plpgsql; SELECT (testfunc.response)."id", (testfunc.response)."user_id", (testfunc.response)."data", (testfunc.response)."createdAt", (testfunc.response)."updatedAt", testfunc.sequelize_caught_exception FROM pg_temp.testfunc(); DROP FUNCTION IF EXISTS pg_temp.testfunc();
+Executing (6323fd50-f94f-48a0-89c1-ee224595cfcf): COMMIT;
+[0mPUT /v1/users/63513cc74d980f311c5a08e2 [33m400[0m 293.448 ms - 184[0m
+    √ should report error user when password length is less than 6 (328ms)
+[0mPUT /v1/users/palmeiras1914 [33m404[0m 0.696 ms - 44[0m
+    √ should report error "User does not exist" when user does not exists
+[0mPUT /v1/users/63513cc84d980f311c5a08f1 [33m403[0m 67.511 ms - 34[0m
+    √ should report error when logged user is not the same as the requested one (113ms)
+Executing (bc28621a-99d2-4f8c-ad59-1feabb422071): START TRANSACTION;
+Executing (bc28621a-99d2-4f8c-ad59-1feabb422071): SELECT "id", "user_id", "data", "createdAt", "updatedAt" FROM "sessions" AS "Session" WHERE "Session"."user_id" = '63513cc84d980f311c5a08fb' LIMIT 1;
+Executing (bc28621a-99d2-4f8c-ad59-1feabb422071): CREATE OR REPLACE FUNCTION pg_temp.testfunc(OUT response "sessions", OUT sequelize_caught_exception text) RETURNS RECORD AS $func_8f3b31d8ff2d45c19b00e324a11b0fac$ BEGIN INSERT INTO "sessions" ("id","user_id","data","createdAt","updatedAt") VALUES ('d0284bfe-fbc6-4288-ace5-e638186b4290','63513cc84d980f311c5a08fb','H4sIAAAAAAAACquuBQBDv6ajAgAAAA==','2022-10-20 12:19:20.945 +00:00','2022-10-20 12:19:20.945 +00:00') RETURNING * INTO response; EXCEPTION WHEN unique_violation THEN GET STACKED DIAGNOSTICS sequelize_caught_exception = PG_EXCEPTION_DETAIL; END $func_8f3b31d8ff2d45c19b00e324a11b0fac$ LANGUAGE plpgsql; SELECT (testfunc.response)."id", (testfunc.response)."user_id", (testfunc.response)."data", (testfunc.response)."createdAt", (testfunc.response)."updatedAt", testfunc.sequelize_caught_exception FROM pg_temp.testfunc(); DROP FUNCTION IF EXISTS pg_temp.testfunc();
+Executing (bc28621a-99d2-4f8c-ad59-1feabb422071): COMMIT;
+[0mPUT /v1/users/63513cc84d980f311c5a08fb [32m200[0m 352.730 ms - 132[0m
+    √ should not replace the role of the user (not admin) (388ms)
+
+  PATCH /v1/users/:userId
+Executing (0eb73d39-3fe5-454c-94e0-1330976aa7bb): START TRANSACTION;
+Executing (0eb73d39-3fe5-454c-94e0-1330976aa7bb): SELECT "id", "user_id", "data", "createdAt", "updatedAt" FROM "sessions" AS "Session" WHERE "Session"."user_id" = '63513cc94d980f311c5a0906' LIMIT 1;
+Executing (0eb73d39-3fe5-454c-94e0-1330976aa7bb): CREATE OR REPLACE FUNCTION pg_temp.testfunc(OUT response "sessions", OUT sequelize_caught_exception text) RETURNS RECORD AS $func_1e6bf8c810914abc919c2913163716aa$ BEGIN INSERT INTO "sessions" ("id","user_id","data","createdAt","updatedAt") VALUES ('569f7b1b-76a0-4490-8ea6-c7187a985f06','63513cc94d980f311c5a0906','H4sIAAAAAAAACquuBQBDv6ajAgAAAA==','2022-10-20 12:19:21.483 +00:00','2022-10-20 12:19:21.483 +00:00') RETURNING * INTO response; EXCEPTION WHEN unique_violation THEN GET STACKED DIAGNOSTICS sequelize_caught_exception = PG_EXCEPTION_DETAIL; END $func_1e6bf8c810914abc919c2913163716aa$ LANGUAGE plpgsql; SELECT (testfunc.response)."id", (testfunc.response)."user_id", (testfunc.response)."data", (testfunc.response)."createdAt", (testfunc.response)."updatedAt", testfunc.sequelize_caught_exception FROM pg_temp.testfunc(); DROP FUNCTION IF EXISTS pg_temp.testfunc();
+Executing (0eb73d39-3fe5-454c-94e0-1330976aa7bb): COMMIT;
+[0mPATCH /v1/users/63513cc94d980f311c5a0906 [32m200[0m 336.949 ms - 136[0m
+    √ should update user (375ms)
+Executing (f32ea671-3a16-4800-ba06-09a00add5093): START TRANSACTION;
+Executing (f32ea671-3a16-4800-ba06-09a00add5093): SELECT "id", "user_id", "data", "createdAt", "updatedAt" FROM "sessions" AS "Session" WHERE "Session"."user_id" = '63513cc94d980f311c5a0910' LIMIT 1;
+Executing (f32ea671-3a16-4800-ba06-09a00add5093): CREATE OR REPLACE FUNCTION pg_temp.testfunc(OUT response "sessions", OUT sequelize_caught_exception text) RETURNS RECORD AS $func_b3264bc413954fec8080c2e96d356a04$ BEGIN INSERT INTO "sessions" ("id","user_id","data","createdAt","updatedAt") VALUES ('b95f8b13-455a-4af7-8d2a-8f78852f5b10','63513cc94d980f311c5a0910','H4sIAAAAAAAACquuBQBDv6ajAgAAAA==','2022-10-20 12:19:22.014 +00:00','2022-10-20 12:19:22.014 +00:00') RETURNING * INTO response; EXCEPTION WHEN unique_violation THEN GET STACKED DIAGNOSTICS sequelize_caught_exception = PG_EXCEPTION_DETAIL; END $func_b3264bc413954fec8080c2e96d356a04$ LANGUAGE plpgsql; SELECT (testfunc.response)."id", (testfunc.response)."user_id", (testfunc.response)."data", (testfunc.response)."createdAt", (testfunc.response)."updatedAt", testfunc.sequelize_caught_exception FROM pg_temp.testfunc(); DROP FUNCTION IF EXISTS pg_temp.testfunc();
+Executing (f32ea671-3a16-4800-ba06-09a00add5093): COMMIT;
+[0mPATCH /v1/users/63513cc94d980f311c5a0910 [32m200[0m 317.210 ms - 137[0m
+    √ should not update user when no parameters were given (360ms)
+[0mPATCH /v1/users/palmeiras1914 [33m404[0m 0.674 ms - 44[0m
+    √ should report error "User does not exist" when user does not exists
+[0mPATCH /v1/users/63513cca4d980f311c5a0920 [33m403[0m 70.507 ms - 34[0m
+    √ should report error when logged user is not the same as the requested one (104ms)
+Executing (81c4dd8e-d13e-467c-b38a-d0ea6777c107): START TRANSACTION;
+Executing (81c4dd8e-d13e-467c-b38a-d0ea6777c107): SELECT "id", "user_id", "data", "createdAt", "updatedAt" FROM "sessions" AS "Session" WHERE "Session"."user_id" = '63513cca4d980f311c5a092a' LIMIT 1;
+Executing (81c4dd8e-d13e-467c-b38a-d0ea6777c107): CREATE OR REPLACE FUNCTION pg_temp.testfunc(OUT response "sessions", OUT sequelize_caught_exception text) RETURNS RECORD AS $func_16774899082f46e3a82b63608ef07aa5$ BEGIN INSERT INTO "sessions" ("id","user_id","data","createdAt","updatedAt") VALUES ('2127e371-7c33-4243-bce6-78da56602643','63513cca4d980f311c5a092a','H4sIAAAAAAAACquuBQBDv6ajAgAAAA==','2022-10-20 12:19:22.931 +00:00','2022-10-20 12:19:22.931 +00:00') RETURNING * INTO response; EXCEPTION WHEN unique_violation THEN GET STACKED DIAGNOSTICS sequelize_caught_exception = PG_EXCEPTION_DETAIL; END $func_16774899082f46e3a82b63608ef07aa5$ LANGUAGE plpgsql; SELECT (testfunc.response)."id", (testfunc.response)."user_id", (testfunc.response)."data", (testfunc.response)."createdAt", (testfunc.response)."updatedAt", testfunc.sequelize_caught_exception FROM pg_temp.testfunc(); DROP FUNCTION IF EXISTS pg_temp.testfunc();
+Executing (81c4dd8e-d13e-467c-b38a-d0ea6777c107): COMMIT;
+[0mPATCH /v1/users/63513cca4d980f311c5a092a [32m200[0m 322.006 ms - 132[0m
+    √ should not update the role of the user (not admin) (356ms)
+
+  DELETE /v1/users
+Executing (ef9e479d-6185-413a-ae50-5aa7671e669a): START TRANSACTION;
+Executing (ef9e479d-6185-413a-ae50-5aa7671e669a): SELECT "id", "user_id", "data", "createdAt", "updatedAt" FROM "sessions" AS "Session" WHERE "Session"."user_id" = '63513ccb4d980f311c5a0933' LIMIT 1;
+Executing (ef9e479d-6185-413a-ae50-5aa7671e669a): CREATE OR REPLACE FUNCTION pg_temp.testfunc(OUT response "sessions", OUT sequelize_caught_exception text) RETURNS RECORD AS $func_4501cb702d88460d93b51d8f3d74477a$ BEGIN INSERT INTO "sessions" ("id","user_id","data","createdAt","updatedAt") VALUES ('68d0e0d3-ddc1-4bba-a525-5d82d4030751','63513ccb4d980f311c5a0933','H4sIAAAAAAAACquuBQBDv6ajAgAAAA==','2022-10-20 12:19:23.459 +00:00','2022-10-20 12:19:23.459 +00:00') RETURNING * INTO response; EXCEPTION WHEN unique_violation THEN GET STACKED DIAGNOSTICS sequelize_caught_exception = PG_EXCEPTION_DETAIL; END $func_4501cb702d88460d93b51d8f3d74477a$ LANGUAGE plpgsql; SELECT (testfunc.response)."id", (testfunc.response)."user_id", (testfunc.response)."data", (testfunc.response)."createdAt", (testfunc.response)."updatedAt", testfunc.sequelize_caught_exception FROM pg_temp.testfunc(); DROP FUNCTION IF EXISTS pg_temp.testfunc();
+Executing (ef9e479d-6185-413a-ae50-5aa7671e669a): COMMIT;
+[0mDELETE /v1/users/63513ccb4d980f311c5a0933 [32m204[0m 319.913 ms - -[0m
+[0mGET /v1/users [33m401[0m 1.020 ms - 38[0m
+    √ should delete user (399ms)
+[0mDELETE /v1/users/palmeiras1914 [33m404[0m 0.603 ms - 44[0m
+    √ should report error "User does not exist" when user does not exists
+[0mDELETE /v1/users/63513ccb4d980f311c5a0944 [33m403[0m 64.574 ms - 34[0m
+    √ should report error when logged user is not the same as the requested one (99ms)
+
+  GET /v1/users/profile
+Executing (9d4f56af-cac5-4012-a518-fab73e476bba): START TRANSACTION;
+Executing (9d4f56af-cac5-4012-a518-fab73e476bba): SELECT "id", "user_id", "data", "createdAt", "updatedAt" FROM "sessions" AS "Session" WHERE "Session"."user_id" = '63513ccc4d980f311c5a094e' LIMIT 1;
+Executing (9d4f56af-cac5-4012-a518-fab73e476bba): CREATE OR REPLACE FUNCTION pg_temp.testfunc(OUT response "sessions", OUT sequelize_caught_exception text) RETURNS RECORD AS $func_d7bd0f0b90f44e6ab58f8b79b425317e$ BEGIN INSERT INTO "sessions" ("id","user_id","data","createdAt","updatedAt") VALUES ('1d748381-030f-4164-a8d3-c16dd19dadee','63513ccc4d980f311c5a094e','H4sIAAAAAAAACquuBQBDv6ajAgAAAA==','2022-10-20 12:19:24.322 +00:00','2022-10-20 12:19:24.322 +00:00') RETURNING * INTO response; EXCEPTION WHEN unique_violation THEN GET STACKED DIAGNOSTICS sequelize_caught_exception = PG_EXCEPTION_DETAIL; END $func_d7bd0f0b90f44e6ab58f8b79b425317e$ LANGUAGE plpgsql; SELECT (testfunc.response)."id", (testfunc.response)."user_id", (testfunc.response)."data", (testfunc.response)."createdAt", (testfunc.response)."updatedAt", testfunc.sequelize_caught_exception FROM pg_temp.testfunc(); DROP FUNCTION IF EXISTS pg_temp.testfunc();
+Executing (9d4f56af-cac5-4012-a518-fab73e476bba): COMMIT;
+[0mGET /v1/users/profile [32m200[0m 261.293 ms - 132[0m
+    √ should get the logged user's info (265ms)
+[0mGET /v1/users/profile [33m401[0m 0.000 ms - 36[0m
+    √ should report error without stacktrace when accessToken is expired (39ms)
+
+  @Sequelize --online
+Executing (default): SELECT "value" FROM "main" AS "Main" WHERE "Main"."name" = 'test';
+    √ test database online (57ms)
+
+
+  85 passing (36s)
+
+---------------------------------------|---------|----------|---------|---------|-------------------
+File                                   | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+---------------------------------------|---------|----------|---------|---------|-------------------
+All files                              |   91.81 |    78.22 |   85.29 |    91.9 |                   
+ src                                   |     100 |      100 |     100 |     100 |                   
+  index.js                             |     100 |      100 |     100 |     100 |                   
+ src/config                            |   90.11 |       50 |   71.43 |      90 |                   
+  apollo-graphql.js                    |   85.71 |      100 |     100 |   85.71 | 43-46             
+  express.js                           |     100 |      100 |     100 |     100 |                   
+  logger.js                            |   85.71 |       50 |       0 |   85.71 | 33                
+  mongoose.js                          |   76.92 |       50 |   66.67 |   76.92 | 10-11,16          
+  passport.js                          |   84.62 |       50 |     100 |   83.33 | 17-19             
+  rate-limiter.js                      |     100 |      100 |     100 |     100 |                   
+  sequelize.js                         |    87.5 |      100 |     100 |    87.5 | 14                
+  vars.js                              |     100 |       50 |     100 |     100 | 17-22             
+ src/controllers                       |   87.79 |    78.57 |   83.33 |    88.1 |                   
+  auth.controller.js                   |     100 |      100 |     100 |     100 |                   
+  index.js                             |     100 |      100 |     100 |     100 |                   
+  session.controller.js                |     100 |      100 |     100 |     100 |                   
+  status.controller.js                 |      50 |      100 |       0 |      50 | 4                 
+  testing.controller.js                |     100 |      100 |     100 |     100 |                   
+  user.controller.js                   |   71.64 |    66.67 |   73.33 |   71.43 | ...17-127,135-141 
+  variables.controller.js              |   95.45 |       50 |     100 |   95.45 | 29                
+ src/errors                            |     100 |       50 |     100 |     100 |                   
+  api-error.js                         |     100 |       50 |     100 |     100 | 19                
+  extandable-error.js                  |     100 |      100 |     100 |     100 |                   
+ src/graphql                           |     100 |      100 |     100 |     100 |                   
+  schema.graphql.js                    |     100 |      100 |     100 |     100 |                   
+ src/graphql/resolvers                 |     100 |      100 |     100 |     100 |                   
+  index.js                             |     100 |      100 |     100 |     100 |                   
+  mutation.graphql.js                  |     100 |      100 |     100 |     100 |                   
+  query.qraphql.js                     |     100 |      100 |     100 |     100 |                   
+ ...aphql/resolvers/mutations/messages |     100 |      100 |     100 |     100 |                   
+  add-message.js                       |     100 |      100 |     100 |     100 |                   
+  remove-message.js                    |     100 |      100 |     100 |     100 |                   
+ src/graphql/resolvers/queries         |     100 |      100 |     100 |     100 |                   
+  status.graphql.js                    |     100 |      100 |     100 |     100 |                   
+ ...graphql/resolvers/queries/messages |     100 |      100 |     100 |     100 |                   
+  find-one-by-id.js                    |     100 |      100 |     100 |     100 |                   
+  list.js                              |     100 |      100 |     100 |     100 |                   
+ src/graphql/resolvers/queries/testing |     100 |      100 |     100 |     100 |                   
+  fake-posts.js                        |     100 |      100 |     100 |     100 |                   
+  fake-users.js                        |     100 |      100 |     100 |     100 |                   
+ src/middlewares                       |   93.83 |    85.71 |      90 |   93.59 |                   
+  auth.js                              |   97.44 |    95.65 |     100 |    97.3 | 41                
+  error.js                             |   85.71 |     62.5 |   66.67 |   85.71 | 44,60-64          
+  index.js                             |     100 |      100 |     100 |     100 |                   
+  roles-guard.js                       |     100 |      100 |     100 |     100 |                   
+  session.js                           |    87.5 |       50 |     100 |    87.5 | 10                
+ src/models                            |   96.63 |    89.29 |     100 |   96.55 |                   
+  passwordResetToken.model.js          |     100 |      100 |     100 |     100 |                   
+  refreshToken.model.js                |     100 |      100 |     100 |     100 |                   
+  user.model.js                        |   95.08 |    89.29 |     100 |   94.92 | 68,155,221        
+ src/models/sequelize                  |   94.74 |      100 |     100 |   94.74 |                   
+  index.js                             |   94.74 |      100 |     100 |   94.74 | 55                
+ src/models/sequelize/main             |     100 |      100 |     100 |     100 |                   
+  index.js                             |     100 |      100 |     100 |     100 |                   
+ src/models/sequelize/messages         |     100 |      100 |     100 |     100 |                   
+  index.js                             |     100 |      100 |     100 |     100 |                   
+ src/models/sequelize/role-user        |   63.64 |        0 |   66.67 |      65 |                   
+  index.js                             |   63.64 |        0 |   66.67 |      65 | 43-63             
+ src/models/sequelize/roles            |     100 |      100 |     100 |     100 |                   
+  index.js                             |     100 |      100 |     100 |     100 |                   
+ src/models/sequelize/session          |   81.82 |      100 |      80 |   81.82 |                   
+  index.js                             |   81.82 |      100 |      80 |   81.82 | 6,15              
+ src/routes/v1                         |     100 |       50 |     100 |     100 |                   
+  auth.route.js                        |     100 |       50 |     100 |     100 | 52-116            
+  index.js                             |     100 |      100 |     100 |     100 |                   
+  session.route.js                     |     100 |      100 |     100 |     100 |                   
+  status.route.js                      |     100 |      100 |     100 |     100 |                   
+  testing.route.js                     |     100 |      100 |     100 |     100 |                   
+  user.route.js                        |     100 |      100 |     100 |     100 |                   
+  variables.route.js                   |     100 |      100 |     100 |     100 |                   
+ src/services/emails                   |   53.33 |       50 |      20 |   53.33 |                   
+  emailProvider.js                     |   53.33 |       50 |      20 |   53.33 | 19,24-47,51-72    
+ src/utils                             |     100 |      100 |     100 |     100 |                   
+  group-by-count.js                    |     100 |      100 |     100 |     100 |                   
+  gzip.js                              |     100 |      100 |     100 |     100 |                   
+  has-own.js                           |     100 |      100 |     100 |     100 |                   
+  index.js                             |     100 |      100 |     100 |     100 |                   
+  next-middleware.js                   |     100 |      100 |     100 |     100 |                   
+  resolver-context.js                  |     100 |      100 |     100 |     100 |                   
+  run-validation.js                    |     100 |      100 |     100 |     100 |                   
+  test-id.js                           |     100 |      100 |     100 |     100 |                   
+ src/validations                       |     100 |      100 |     100 |     100 |                   
+  auth.validation.js                   |     100 |      100 |     100 |     100 |                   
+  user.validation.js                   |     100 |      100 |     100 |     100 |                   
+ src/validations/checks                |     100 |      100 |     100 |     100 |                   
+  index.js                             |     100 |      100 |     100 |     100 |                   
+ src/validations/checks/route-session  |     100 |      100 |     100 |     100 |                   
+  index.js                             |     100 |      100 |     100 |     100 |                   
+ src/validations/checks/route-users    |     100 |      100 |     100 |     100 |                   
+  index.js                             |     100 |      100 |     100 |     100 |                   
+ ...validations/checks/route-variables |     100 |      100 |     100 |     100 |                   
+  index.js                             |     100 |      100 |     100 |     100 |                   
+---------------------------------------|---------|----------|---------|---------|-------------------
+Done in 41.59s.

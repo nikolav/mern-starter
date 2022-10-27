@@ -1,0 +1,27 @@
+
+###
+
+http://localhost:3001/v1/variables
+Accept: application/json
+Authorization: Bearer -
+
+###
+
+http://localhost:3344/users
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer -
+
+###
+
+POST http://localhost:3001/v1/auth/login
+Accept: application/json
+Content-Type: application/json
+
+{
+  "email": "admin@nikolav.rs",
+  "password": "122333"
+}
+
+###
+

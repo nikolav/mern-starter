@@ -1,0 +1,52 @@
+version: "3"
+
+services:
+
+  app_app:
+    container_name: app_reactapp
+    build: ./reactapp
+    ports:
+      - 8080:3000
+    volumes:
+      - ./reactapp:/home/app
+    depends_on:
+      - app_postgres
+      - app_api
+    env_file:
+      - ./reactapp/.env
+    networks:
+      - app_pn0
+
+  app_api:
+    container_name: app_restapi
+    build: ./restapi--express
+    ports:
+      - 8081:3001
+    volumes:
+      - ./restapi--express:/home/app
+    depends_on:
+      - app_postgres
+    env_file:
+      - ./restapi--express/.env
+    networks:
+      - app_pn0
+
+  app_postgres:
+    container_name: app_pg
+    image: postgres:14.5
+    restart: always
+    ports:
+      - 5555:5432
+    env_file:
+      - ./restapi--express/.env
+    volumes:
+      - app_vol_pg:/var/lib/postgresql/
+    networks:
+      - app_pn0
+
+volumes:
+  app_vol_pg:
+
+networks:
+  app_pn0:
+    driver: bridge
